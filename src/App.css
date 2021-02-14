@@ -1,0 +1,90 @@
+
+.container{
+  max-width: 600px;
+  margin: 0 auto;
+}
+.page{
+  overflow: hidden;
+}
+
+.main{
+  padding-left: 305px;
+  padding-top: 35px;  
+  background: #181818;
+  height: 100vh;
+  padding-top: 58px;
+  overflow: auto;
+}
+.profile{
+  padding-left: 20px;
+  padding-top: 20px;
+  display: flex;
+  margin-bottom: 55px;
+
+}
+.photo__profile{
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  display: block;
+  background-color: #fff;
+  font-size: 12px;
+  overflow: hidden;
+}
+.photo__profile img{
+  max-width: 100%;
+  display: block;
+}
+.descripe {
+  padding-top: 5px;
+  margin-left: 30px;
+  color: #fff;
+  max-width: 120px;
+}
+.title{
+  margin-bottom: 6px;
+  font-size: 16px;
+}
+.descripe p{
+  line-height: 20px;
+}
+.sidebar__text{
+  min-width: 256px;
+  padding: 0px 20px;
+  text-align: center;
+  color: #fff;
+  line-height: 20px;
+  margin-bottom: 50px;
+}
+.button-block{
+  display: flex;
+  padding: 0px 20px;
+}
+.button{
+  padding: 10px 20px;
+  border-radius: 20px;
+  line-height: 14px;
+  color:#fff;
+
+}
+.button--red{
+  background-color: red;
+  margin-right: 10px;
+}
+.button--blue{
+  background-color: blue;
+  margin-right: 0px;  
+}
+
+.history__img{
+  width: 137px;
+  height: 190px;
+}
+.history{
+  display: flex;
+}
+.profile__photo{
+  margin-bottom: 20px;
+  margin-right: 20px;
+}

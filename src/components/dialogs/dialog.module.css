@@ -1,0 +1,15 @@
+.link{
+    color: rgba(255,255,255,0.6);
+    display: block;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+.link.active{
+    color: rgba(255,255,255,1);
+}
+.link:hover{
+    color: rgba(255,255,255,1);
+}
+.messageText{
+    hyphens: auto;
+}

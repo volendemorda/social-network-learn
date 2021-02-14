@@ -1,0 +1,36 @@
+.container__sidebar{
+  padding: 20px 30px;
+}
+.container__flex{
+  display: flex;
+}
+.sidebar__title{
+  margin-top: 5px;
+  color: rgba(255, 255, 255, 1);
+  font-size: 16px;
+}
+.sidebar__menu{
+}
+.sidebar__list li{
+  margin-bottom: 20px;
+}
+.sidebar__link{
+  font-size: 25px;
+  color: rgba(255, 255, 255, .6);
+
+}
+.sidebar__link.active{
+color: rgba(255, 255, 255, 1);
+}
+.sidebar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 500;
+  width: 300px;
+  height: 100vh;
+  background-color: #202020;
+}
+.sidebar__link.active{
+  color: rgba(255, 255, 255, 1);
+}

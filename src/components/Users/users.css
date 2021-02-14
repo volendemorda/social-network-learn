@@ -1,0 +1,51 @@
+
+
+.usersPage__column{
+  color: #fff;
+}
+.usersPage__title{
+  font-size: 16px;
+  hyphens: auto;
+  max-width: 150px;
+}
+.usersPage__photo{
+  width: 100px;
+  height: 100px;
+}
+.usersPage__photo img{
+  display: block;
+  border-radius: 50%;
+  max-width: 100%;
+}
+.usersPage__btn{
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: blue;
+  color: #fff;
+}
+.usersPage__status{
+  hyphens: auto;
+  max-width: 150px;
+  margin-bottom: 20px;
+  flex: 1 1 auto;
+}
+.usersPage__wrapper{
+  margin-bottom: 30px;
+  flex: 0 1 33.333%;
+}
+.currentCountPage{
+  margin-left: 10px;
+  margin-bottom: 30px;
+  padding: 5px 10px;
+  background-color: rgba(25, 25, 209, 0.5);
+  color: #D2D2D2;
+  font-size: 15px;
+  font-weight: 700;
+}
+.currentCountPage.active{
+  background-color: rgba(25, 25, 209, 1);
+}
+.usersPage__content{
+  flex-wrap: wrap;
+  display: flex;
+}
