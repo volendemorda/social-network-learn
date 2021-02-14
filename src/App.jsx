@@ -8,12 +8,13 @@ import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/headerContainer";
 import Login from "./components/Login/login";
 import ProfileUserContainer from "./components/post/Profile/profileUserContainer";
+import SidebarContainer from './components/Sidebar/sidebarContainer'
 
-const App = (props)=>{
+const App = ()=>{
   return (
     <div className = "page" >
      <HeaderContainer/>
-     <Sidebar name = "Lord Szn<3"/>
+     <SidebarContainer />
      <div className="app-wrapper">
          <Route  path="/dialogs" render={() =>  <DialogsContainer/>}/>
          <Route path="/posts"  render={()=> <PostContainer/>}/>

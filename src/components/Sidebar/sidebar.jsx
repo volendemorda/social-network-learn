@@ -13,7 +13,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
        <div className={SidebarStyle.container__sidebar}>
          <div className={SidebarStyle.container__flex}>
          <div className="photo__profile profile__photo"><img src="https://fs1.inspider.ru/photo/2013/03/28/a97d5cc5ca99fb659ff6522f95c92bc0.jpg" alt=""/><img src="" alt=""/></div>
-          <div className={SidebarStyle.sidebar__title}>{props.name}</div>  
+          <div className={SidebarStyle.sidebar__title}>{props.Sidebar.login}</div>  
          </div>
          <nav className={SidebarStyle.sidebar__menu}>
            <ul className={SidebarStyle.sidebar__list}>

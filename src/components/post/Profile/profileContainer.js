@@ -6,7 +6,6 @@ import {withRouter} from "react-router-dom";
 import ProfileUserContainer from "./profileUserContainer";
 
 const mapStateToProps = (state)=>{
-    debugger
     return{
         profile: getProfile(state)
     }

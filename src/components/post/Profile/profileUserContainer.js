@@ -28,6 +28,7 @@ const mapStateToProps = (state) => {
     status: getStatus(state),
   };
 };
+
 export default connect(mapStateToProps, {
   ProfileStatusThunkCreator,
   updateProfileStatusThunkCreator,

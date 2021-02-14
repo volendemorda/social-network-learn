@@ -4,37 +4,41 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import unKnow from './../../../image/unknow.jpg'
 import ProfileStatus from './profileStatus';
+import Proloader from '../../Users/proloader/proloader';
 
-const UserProfile = (props)=>{
-    console.log(props);
+const UserProfile = ({profile,status,isFetchind})=>{
     return(
+        <>
         <div>
             <div className="profile-users main">
                 <div className="container">
-                    <header className="profile-users__header">
+                    <div className="profile-users__header">
                         <div className="profile-users__picture">
-                            
+                          {
+                              profile.photos && profile.photos.small === null
+                              ?  <img src={unKnow} alt=""/>
+                              :  <img src={profile.photos} alt=""/>
+                          }
                         </div>
                         <div className="profile-users__person">
                             <div className="profile-users__name">
-                               {/* {props.profile.fullName} */}
+                            {profile.fullName}
+                            </div>
+                            <div className="profile-users__job">
+                                {profile.lookingForAJob === false
+                                ? <span>не ищу работу...</span>
+                                : <span>в активном поиске</span>
+                                }
                             </div>
                             <div className="profile-users__discribe">
-                                <ProfileStatus {...props}/>
-                                {/* {props.profile.aboutMe || `нет статуса...`} */}
-                            </div>
-                            <div className="profile__social">
-                                <ul>
-                                    {/* <li><FacebookIcon/> {props.profile.contacts.facebook}</li> */}
-                                    {/* <li><GitHubIcon/>{props.profile.contacts.github}</li>
-                                    <li><InstagramIcon/>{props.profile.contacts.instagram}</li> */}
-                                </ul>
+                                <ProfileStatus status={status}/>
                             </div>
                         </div>
-                    </header>
+                    </div>
                 </div>
             </div>
         </div>
+        </>
     )
 }
 export default UserProfile

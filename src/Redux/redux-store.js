@@ -5,14 +5,15 @@ import usersReducer from "./usersReducer";
 import {authUserReducer} from "./auth";
 import thunkMiddleware from 'redux-thunk'
 import {userProfileReducer} from "./profileUserReducer";
-
+import sidebarReducer from "./sidebarReducer";
 
 const reducers = combineReducers({
     PostPage: postReducer,
     MessagePage: messageReducer,
     UsersPage: usersReducer,
     AuthPage: authUserReducer,
-    ProfilePage: userProfileReducer
+    ProfilePage: userProfileReducer,
+    Sidebar: sidebarReducer
 })
 const store = createStore(reducers,applyMiddleware(thunkMiddleware))
 

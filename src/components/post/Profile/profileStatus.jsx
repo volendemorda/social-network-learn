@@ -20,6 +20,7 @@ const ProfileStatus = (props) => {
           onBlur={closeHandler}
           value={status}
           onChange={onChangeHandler}
+          autoFocus={true}
         />
       ) : (
         <span onDoubleClick={doubleClickHandler}>

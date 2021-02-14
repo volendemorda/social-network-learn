@@ -2,24 +2,29 @@ import { profileAPI } from "../components/Users/API";
 
 const setProfile = "setProfile";
 const setStatus = "setStatus";
+const toggleFetching = "toggleFetching"
 
 const initState = {
-  profile: null,
   status: null,
+  isFetchind: false
 };
 export const userProfileReducer = (state = initState, action) => {
   switch (action.type) {
     case setProfile:
       return {
         ...state,
-        profile: action.profile,
+        ...action.profile,
       };
     case setStatus:
-      console.log(action.status);
       return {
         ...state,
         status: action.status,
       };
+    case toggleFetching:
+        return{
+          ...state,
+          isFetchind: action.isFetchind
+        }
     default:
       return state;
   }
@@ -37,11 +42,18 @@ export const setStatusAC = (status) => {
     status,
   };
 };
+export const toggleFetchingAC = (isFetchind)=>{
+  return{
+    type: toggleFetching,
+    isFetchind
+  }
+}
 
 export const getProfileThunkCreator = (id) => (dispatch) => {
+  dispatch(toggleFetchingAC(true))
   profileAPI.getProfileUser(id).then((data) => {
     dispatch(setProfileAC(data));
-    console.log(data);
+    dispatch(toggleFetchingAC(false))
   });
 };
 
