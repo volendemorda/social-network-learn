@@ -64,7 +64,8 @@ export const usersReducer = (state = initUsers, action)=>{
             debugger
             return {
                 ...state,
-                disableButton: action.isFetching 
+                isFetching: action.flag,
+                disableButton: action.flag 
                 ? [...state.disableButton, action.buttonId] 
                 : [state.disableButton.filter(id=> id!==action.buttonId)] 
             }
@@ -104,10 +105,11 @@ export const toggleIsFetchingActionCreator = (flag)=>{
         flag
     }
 }
-export const toggleIsGetDataFollowsActionCreator = (buttonId)=>{
+export const toggleIsGetDataFollowsActionCreator = (buttonId,flag)=>{
     return{
         type: disableInProgressFollow,
-        buttonId
+        buttonId,
+        flag
     }
 }
 
@@ -124,27 +126,25 @@ export const getUsersThunkCreator = (CurrentPage, pageSize)=>{
 }
 export const UnfollowThunkCreator = (id)=>{
     return dispatch=>{
-        dispatch(toggleIsFetchingActionCreator(true))
+        dispatch(toggleIsGetDataFollowsActionCreator(id,true))
         userAPI.unFollow(id)
             .then(data=>{
                 if (data.resultCode === 0){
                     dispatch(UnFollowActionCreator(id))
-                    dispatch(toggleIsFetchingActionCreator(false))
-                    dispatch(toggleIsGetDataFollowsActionCreator(id))
+                    dispatch(toggleIsGetDataFollowsActionCreator(id,false))
                 }
             })
     }
 }
 export const followThunkCreator = (id)=>{
     return dispatch=>{
-        dispatch(toggleIsFetchingActionCreator(true))
+        dispatch(toggleIsGetDataFollowsActionCreator(id,true))
         userAPI.follow(id)
             .then(data=> {
                 if (data.resultCode === 0) {
                     console.log(id);
                     dispatch(FollowActionCreator(id))
-                    dispatch(toggleIsGetDataFollowsActionCreator(id))
-                    dispatch(toggleIsFetchingActionCreator(false))
+                    dispatch(toggleIsGetDataFollowsActionCreator(id,false))
                 }
             })
     }

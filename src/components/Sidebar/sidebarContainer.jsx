@@ -8,7 +8,6 @@ import {setProfileDataThunkCreator} from './../../Redux/sidebarReducer'
     this.props.setProfileDataThunkCreator()
   } 
   render() {
-    console.log(this.props);
       return <Sidebar {...this.props}/>
   }
  }

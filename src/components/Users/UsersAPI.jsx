@@ -14,7 +14,7 @@ const UserAPI = (props) => {
     const generateButtonPage = () => {
         return page.map(item => {
             return (
-                <button className={item === props.CurrentPage
+                <button key={item}className={item === props.CurrentPage
                     ? `currentCountPage active`
                     : `currentCountPage`
                 } onClick={() => {
@@ -51,7 +51,7 @@ const UserAPI = (props) => {
                     </div>
                     {u.followed
                         ? <Button disable={props.disableButton.find(id=>id === u.id)} variant="outlined" color="primary" onClick={() => {props.UnfollowThunkCreator(u.id)}} className="usersPage__btn">Отписаться</Button>
-                        : <Button variant="outlined" color="primary" onClick={() => {props.followThunkCreator(u.id)}} className="usersPage__btn">Подписаться</Button>
+                        : <Button disable={props.disableButton.find(id=>id === u.id)} variant="outlined" color="primary" onClick={() => {props.followThunkCreator(u.id)}} className="usersPage__btn">Подписаться</Button>
                     }
                 </div>
             )
