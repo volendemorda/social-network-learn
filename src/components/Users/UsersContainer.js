@@ -16,7 +16,7 @@ const mapStateToProps = (state)=>{
         totalCountUsers: state.UsersPage.totalCountUsers,
         pageSize: state.UsersPage.pageSize,
         isFetching: state.UsersPage.isFetching,
-        isGetDataFollow: state.UsersPage.isGetDataFollow
+        disableButton: state.UsersPage.disableButton
 
     }
 }

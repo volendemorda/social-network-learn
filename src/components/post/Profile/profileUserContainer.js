@@ -7,7 +7,7 @@ import {
   updateProfileStatusThunkCreator,
   getProfileThunkCreator,
 } from "../../../Redux/profileUserReducer";
-import { getProfile, getStatus } from "./reselect.profile";
+import {getProfile, getStatus } from "./reselect.profile";
 
 class ProfileUserContainer extends React.Component {
   componentDidMount() {
@@ -18,14 +18,18 @@ class ProfileUserContainer extends React.Component {
     this.props.getProfileThunkCreator(userId);
     this.props.ProfileStatusThunkCreator(userId);
   }
-  render() {
-    return <UserProfile {...this.props} />;
+  render() { 
+    return(
+      <>
+      <UserProfile {...this.props}/>
+      </>
+    )
   }
 }
 const mapStateToProps = (state) => {
   return {
     profile: getProfile(state),
-    status: getStatus(state),
+    status: getStatus(state)
   };
 };
 

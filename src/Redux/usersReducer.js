@@ -5,15 +5,17 @@ const UnFollow = 'UNFOLLOW'
 const setUser = 'SETUSERS'
 const SetPageUsers = 'SETPAGEUSERS'
 const Fetching = 'ISFETCHING'
-const isGetDataFollows = 'isGetDataFollows'
+const disableInProgressFollow = 'disableInProgressFollow'
+
 const initUsers = {
     users:[],
     currentPage: 1,
     totalCountUsers: 100,
     pageSize: 9,
     isFetching: false,
-    isGetDataFollow: []
+    disableButton: []
 }
+
 export const usersReducer = (state = initUsers, action)=>{
     switch (action.type){
         case Follow:
@@ -58,10 +60,13 @@ export const usersReducer = (state = initUsers, action)=>{
                 ...state,
                 isFetching: action.flag
             }
-        case isGetDataFollows:
+        case disableInProgressFollow:
+            debugger
             return {
                 ...state,
-                isGetDataFollows: [...state.isGetDataFollow,action.id]
+                disableButton: action.isFetching 
+                ? [...state.disableButton, action.buttonId] 
+                : [state.disableButton.filter(id=> id!==action.buttonId)] 
             }
         default:
             return state
@@ -99,12 +104,13 @@ export const toggleIsFetchingActionCreator = (flag)=>{
         flag
     }
 }
-export const toggleIsGetDataFollowsActionCreator = (id)=>{
+export const toggleIsGetDataFollowsActionCreator = (buttonId)=>{
     return{
-        type: isGetDataFollows,
-        id
+        type: disableInProgressFollow,
+        buttonId
     }
 }
+
 
 export const getUsersThunkCreator = (CurrentPage, pageSize)=>{
     return dispatch=>{
@@ -124,6 +130,7 @@ export const UnfollowThunkCreator = (id)=>{
                 if (data.resultCode === 0){
                     dispatch(UnFollowActionCreator(id))
                     dispatch(toggleIsFetchingActionCreator(false))
+                    dispatch(toggleIsGetDataFollowsActionCreator(id))
                 }
             })
     }
@@ -131,11 +138,12 @@ export const UnfollowThunkCreator = (id)=>{
 export const followThunkCreator = (id)=>{
     return dispatch=>{
         dispatch(toggleIsFetchingActionCreator(true))
-        dispatch(toggleIsGetDataFollowsActionCreator(id))
         userAPI.follow(id)
             .then(data=> {
                 if (data.resultCode === 0) {
+                    console.log(id);
                     dispatch(FollowActionCreator(id))
+                    dispatch(toggleIsGetDataFollowsActionCreator(id))
                     dispatch(toggleIsFetchingActionCreator(false))
                 }
             })

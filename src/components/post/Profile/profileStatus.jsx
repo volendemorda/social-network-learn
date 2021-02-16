@@ -4,8 +4,10 @@ import React, { useEffect, useState } from "react";
 const ProfileStatus = (props) => {
   const [editmode, setEditMode] = useState(false);
   const [status, setStatus] = useState(props.status);
+  window.status = status
   const doubleClickHandler = () => setEditMode(true);
   const closeHandler = () => {
+    props.updateProfileStatusThunkCreator(status);
     setEditMode(false);
   };
   useEffect(() => {
@@ -18,7 +20,7 @@ const ProfileStatus = (props) => {
         <input
           type="text"
           onBlur={closeHandler}
-          value={status}
+          value={status || ' '}
           onChange={onChangeHandler}
           autoFocus={true}
         />

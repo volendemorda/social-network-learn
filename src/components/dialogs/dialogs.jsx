@@ -7,7 +7,6 @@ import {Redirect} from "react-router-dom";
 
 
 const Dialogs = (props)=>{
-    debugger
     const generateMessage = props.MessagePage.message.map(m=><Message Messeges = {m.message} key={m.id} mesId = {m.id}/>)
     const generateUser = props.MessagePage.user.map(user=><User name={user.name} key={user.id} id={user.id}/>)
     let newMessageBody = props.MessagePage.newMessageText

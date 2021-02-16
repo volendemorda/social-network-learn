@@ -6,7 +6,10 @@
     transform: translate(-3%, -50%);
     display: flex;
 }
-
+.main{
+    background-color: #181818;
+    
+}
 .dash {
     margin: 0 15px;
     width: 35px;
