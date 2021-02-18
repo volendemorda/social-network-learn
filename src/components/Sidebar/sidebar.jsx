@@ -39,7 +39,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
                </NavLink>
              </li>
              <li>
-               <NavLink to="/Options"activeClassName={SidebarStyle.active} className={SidebarStyle.sidebar__link}>
+               <NavLink to="/Settings"activeClassName={SidebarStyle.active} className={SidebarStyle.sidebar__link}>
                  <SettingsIcon/> Настройки
                </NavLink>
              </li>

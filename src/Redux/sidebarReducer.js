@@ -8,7 +8,6 @@ const initState = {
 }
 
 export const sidebarReducer = (state = initState,action)=>{
-
     switch (action.type){
         case setProfileUser:
             return{
@@ -18,8 +17,8 @@ export const sidebarReducer = (state = initState,action)=>{
         default:
             return state
     }
-
 }
+
 const setProfileDataAC = (id,email,login) =>{
     return{
         type: setProfileUser,
@@ -31,13 +30,19 @@ const setProfileDataAC = (id,email,login) =>{
     }
 }
 
-export const setProfileDataThunkCreator = ()=>(dispatch)=>{
-    authAPI.getUserAuth()
-        .then(data=>{
+// thunkCreator
+export const setProfileDataThunkCreator = ()=>{
+    return async dispatch=>{
+        try{
+            const data = await authAPI.getUserAuth()
             if (data.resultCode === 0){
                 const {id,email,login} = data.data
                 dispatch(setProfileDataAC(id,email,login))
+            }
         }
-    })
+        catch(error){
+            console.log(error)
+        }
+    }
 }
 export default sidebarReducer

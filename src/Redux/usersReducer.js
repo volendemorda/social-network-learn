@@ -10,7 +10,7 @@ const disableInProgressFollow = 'disableInProgressFollow'
 const initUsers = {
     users:[],
     currentPage: 1,
-    totalCountUsers: 100,
+    totalCountUsers: 0,
     pageSize: 9,
     isFetching: false,
     disableButton: []
@@ -48,7 +48,8 @@ export const usersReducer = (state = initUsers, action)=>{
         case setUser:
             return {
                 ...state,
-                users: [...action.users]
+                users: [...action.users],
+                totalCountUsers: action.count
             }
         case SetPageUsers:
             return {
@@ -61,7 +62,6 @@ export const usersReducer = (state = initUsers, action)=>{
                 isFetching: action.flag
             }
         case disableInProgressFollow:
-            debugger
             return {
                 ...state,
                 isFetching: action.flag,
@@ -86,10 +86,11 @@ export const UnFollowActionCreator = (userId)=> {
         userId
     }
 }
-export const setUsersActionCreator = (users)=>{
+export const setUsersActionCreator = (users,count)=>{
     return{
         type: setUser,
         users,
+        count
 
     }
 }
@@ -113,40 +114,49 @@ export const toggleIsGetDataFollowsActionCreator = (buttonId,flag)=>{
     }
 }
 
-
+// thunkCreator
 export const getUsersThunkCreator = (CurrentPage, pageSize)=>{
-    return dispatch=>{
-        dispatch(toggleIsFetchingActionCreator(true))
-        userAPI.getUsers(CurrentPage, pageSize)
-            .then(data=>{
-                dispatch(setUsersActionCreator(data.items))
-                dispatch(toggleIsFetchingActionCreator(false))
-            })
+    return async dispatch=>{
+       try{
+            dispatch(toggleIsFetchingActionCreator(true))
+            const data = await userAPI.getUsers(CurrentPage, pageSize)
+            dispatch(setUsersActionCreator(data.items,data.totalCount))
+            dispatch(toggleIsFetchingActionCreator(false))
+       }
+       catch(error){
+           console.log(error)
+       }
     }
 }
+
 export const UnfollowThunkCreator = (id)=>{
-    return dispatch=>{
-        dispatch(toggleIsGetDataFollowsActionCreator(id,true))
-        userAPI.unFollow(id)
-            .then(data=>{
-                if (data.resultCode === 0){
-                    dispatch(UnFollowActionCreator(id))
-                    dispatch(toggleIsGetDataFollowsActionCreator(id,false))
-                }
-            })
+    return async dispatch=>{
+        try{
+            dispatch(toggleIsGetDataFollowsActionCreator(id,true))
+            const data = await userAPI.unFollow(id)
+            if (data.resultCode === 0){
+                dispatch(UnFollowActionCreator(id))
+                dispatch(toggleIsGetDataFollowsActionCreator(id,false))
+            }
+        }
+        catch(error){
+           console.log(error)
+        }
     }
 }
 export const followThunkCreator = (id)=>{
-    return dispatch=>{
-        dispatch(toggleIsGetDataFollowsActionCreator(id,true))
-        userAPI.follow(id)
-            .then(data=> {
+    return async dispatch=>{
+        try{
+            dispatch(toggleIsGetDataFollowsActionCreator(id,true))
+            const data = await userAPI.follow(id)
                 if (data.resultCode === 0) {
-                    console.log(id);
                     dispatch(FollowActionCreator(id))
                     dispatch(toggleIsGetDataFollowsActionCreator(id,false))
                 }
-            })
+        }
+        catch(error){
+            console.log(error)
+        }
     }
 }
 export default usersReducer

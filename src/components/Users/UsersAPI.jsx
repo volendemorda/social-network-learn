@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 
 
 const UserAPI = (props) => {
+    const [countPage,setCountPage] = React.useState(1)
     const countPageUsers = Math.ceil(props.totalCountUsers / props.pageSize)
     const page = []
     for (let i = 1; i <= countPageUsers; i++) {

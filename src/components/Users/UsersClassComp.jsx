@@ -14,7 +14,7 @@ class Users extends React.Component {
     this.props.pageUsersActionCreator(item);
     this.props.getUsersThunkCreator(item, this.props.pageSize);
   };
-  render() {
+  render() {    
     return (
       <div>
         {this.props.isFetching === true ? <Proloader /> : null}

@@ -1,6 +1,5 @@
 import {Route} from 'react-router-dom';
 import './App.css';
-import Sidebar from './components/Sidebar/sidebar';
 import './nullstyle.css'
 import DialogsContainer from "./components/dialogs/dialogs.container";
 import PostContainer from "./components/post/postContainer";
@@ -9,6 +8,8 @@ import HeaderContainer from "./components/Header/headerContainer";
 import Login from "./components/Login/login";
 import ProfileUserContainer from "./components/post/Profile/profileUserContainer";
 import SidebarContainer from './components/Sidebar/sidebarContainer'
+import SettingsProfileContainer from './components/Settings/SettingsProfileContainer'
+
 
 const App = ()=>{
   return (
@@ -21,6 +22,7 @@ const App = ()=>{
          <Route path="/users"  render={()=> <UsersContainer/>}/>
          <Route path="/login" render={()=><Login/>}/>
          <Route path="/profile/:userId?" render={()=><ProfileUserContainer/>}/>
+         <Route path="/Settings" render={()=> <SettingsProfileContainer/>}/>
      </div>
     </div>
   )

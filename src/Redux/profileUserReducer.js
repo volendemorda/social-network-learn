@@ -44,23 +44,42 @@ export const toggleFetchingAC = (isFetchind)=>{
   }
 }
 
-export const getProfileThunkCreator = (id) => (dispatch) => {
-  profileAPI.getProfileUser(id).then((data) => {
-    dispatch(setProfileAC(data));
-  });
-};
 
-export const ProfileStatusThunkCreator = (id) => (dispatch) => {
-  profileAPI.getStatus(id).then((data) => {
-    dispatch(setStatusAC(data));
-  });
-};
-
-export const updateProfileStatusThunkCreator =(status) => (dispatch) => {
-  profileAPI.updateStatus(status).then((data) => {
-    if (data.resultCode === 0) {
-      dispatch(setStatusAC(status));
+// thunkCreator
+export const getProfileThunkCreator = (id) => {
+  return async dispatch=>{
+    try{
+      const data = await profileAPI.getProfileUser(id)
+      dispatch(setProfileAC(data))
     }
-  });
-};
+    catch(error){
+      console.log(error);
+    }
+  }
+}
 
+export const ProfileStatusThunkCreator = (id) =>{
+  return async dispatch=>{
+    try{
+      const data = await profileAPI.getStatus(id)
+      dispatch(setStatusAC(data))
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
+}
+
+export const updateProfileStatusThunkCreator =(status) =>{
+  return async dispatch=>{
+    try{
+      const data = await profileAPI.updateStatus(status)
+      if (data.resultCode === 0) {
+          dispatch(setStatusAC(status));
+      }
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
+}
