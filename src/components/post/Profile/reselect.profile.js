@@ -5,3 +5,4 @@ export const getProfile = (state)=>{
 export const getStatus = (state)=>{
     return state.ProfilePage.status
 }
+

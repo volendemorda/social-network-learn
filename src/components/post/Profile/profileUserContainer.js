@@ -6,11 +6,12 @@ import {
   ProfileStatusThunkCreator,
   updateProfileStatusThunkCreator,
   getProfileThunkCreator,
+  updatePhotoThunkCreator
 } from "../../../Redux/profileUserReducer";
 import {getProfile, getStatus } from "./reselect.profile";
 
 class ProfileUserContainer extends React.Component {
-  componentDidMount() {
+  refreshProfile(){
     let userId = this.props.match.params.userId;
     if (!userId) {
       userId = 14598;
@@ -18,10 +19,17 @@ class ProfileUserContainer extends React.Component {
     this.props.getProfileThunkCreator(userId);
     this.props.ProfileStatusThunkCreator(userId);
   }
+  componentDidMount() {
+   this.refreshProfile()
+  }
+  componentDidUpdate(prevProps,prevState,snapShot) {
+    if (this.props.match.params.userId !== prevProps.match.params.userId)
+      this.refreshProfile()
+  }
   render() { 
     return(
       <>
-      <UserProfile {...this.props}/>
+      <UserProfile {...this.props} isOwner={!this.props.match.params.userId}/>
       </>
     )
   }
@@ -29,7 +37,7 @@ class ProfileUserContainer extends React.Component {
 const mapStateToProps = (state) => {
   return {
     profile: getProfile(state),
-    status: getStatus(state)
+    status: getStatus(state),
   };
 };
 
@@ -37,4 +45,5 @@ export default connect(mapStateToProps, {
   ProfileStatusThunkCreator,
   updateProfileStatusThunkCreator,
   getProfileThunkCreator,
+  updatePhotoThunkCreator
 })(withRouter(ProfileUserContainer));

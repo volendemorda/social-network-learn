@@ -1,7 +1,13 @@
-
+.pagination__container{
+  max-width: 630px;
+  margin: 0 auto;
+}
 
 .usersPage__column{
   color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .usersPage__title{
   font-size: 16px;
@@ -18,7 +24,7 @@
   max-width: 100%;
 }
 .usersPage__btn{
-  padding: 10px 20px;
+  padding: 5px 10px;
   border-radius: 20px;
   background-color: blue;
   color: #fff;
@@ -39,7 +45,7 @@
   padding: 5px 10px;
   background-color: rgba(25, 25, 209, 0.5);
   color: #D2D2D2;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 700;
 }
 .currentCountPage.active{
@@ -48,4 +54,12 @@
 .usersPage__content{
   flex-wrap: wrap;
   display: flex;
+}
+.list__button{
+  background-color: rgba(25, 25, 209, 1);
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin-left: 10px;
+  color: #fff;
+  margin-bottom: 20px;
 }

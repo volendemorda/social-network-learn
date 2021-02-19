@@ -11,8 +11,8 @@ const initAuth = {
         isAuth: false,
         error: null
 }
-export const authUserReducer = (state = initAuth, action)=>{
 
+export const authUserReducer = (state = initAuth, action)=>{
     switch (action.type){
         case getAuth:
             return {
@@ -47,6 +47,7 @@ export const errorAC = (error)=>{
     }
 }
 
+//thunkCreator
 export const getUserDataIsAuthThunkCreator = () =>{
     return async dispatch=>{
         try{

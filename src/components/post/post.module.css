@@ -43,6 +43,7 @@
     padding: 30px;
     margin-bottom: 40px;
     hyphens: auto;
+    max-width: 600px;
 }
 .post__image img{
     max-height: 300px;
