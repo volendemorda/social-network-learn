@@ -6,7 +6,7 @@ import PostContainer from "./components/post/postContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/headerContainer";
 import Login from "./components/Login/login";
-import ProfileUserContainer from "./components/post/Profile/profileUserContainer";
+import ProfileUserContainer from "./components/Profile/profileUserContainer";
 import SidebarContainer from './components/Sidebar/sidebarContainer'
 import SettingsProfileContainer from './components/Settings/SettingsProfileContainer'
 

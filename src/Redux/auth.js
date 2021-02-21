@@ -1,5 +1,5 @@
 
-import {authAPI, userAPI} from "../components/Users/API";
+import {authAPI, userAPI} from "../components/API/API";
 
 const getAuth = 'getAuth'
 const errorData = 'errorData'

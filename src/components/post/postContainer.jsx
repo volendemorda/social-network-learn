@@ -1,5 +1,5 @@
 import React from 'react'
-import {addPostActionCreator, setUserProfile, updatePostActionCreator} from "../../Redux/postReducer";
+import {addPostActionCreator, updatePostActionCreator} from "../../Redux/postReducer";
 import Post from "./post";
 import {connect} from "react-redux";
 import './components/profileStyle.css'
@@ -19,9 +19,6 @@ const mapDispatchToProps = (dispatch)=>{
         },
         addPostNew: ()=>{
             dispatch(addPostActionCreator())
-        },
-        setUsers: (user)=>{
-            dispatch(setUserProfile(user))
         }
     }
 }
