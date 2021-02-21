@@ -1,10 +1,8 @@
 
-import {authAPI, userAPI} from "../components/API/API";
+import {authAPI} from "../components/API/API";
+import {ActionType, authActionTypes, authACtype, errorACtype, initAuthStateTypes} from './../type/AuthTypes'
 
-const getAuth = 'getAuth'
-const errorData = 'errorData'
-
-const initAuth = {
+const initAuthState:initAuthStateTypes = {
         id: null,
         email: null,
         login: null,
@@ -12,15 +10,15 @@ const initAuth = {
         error: null
 }
 
-export const authUserReducer = (state = initAuth, action)=>{
+export const authUserReducer = (state = initAuthState, action:ActionType):initAuthStateTypes=>{
     switch (action.type){
-        case getAuth:
+        case authActionTypes.getAuth:
             return {
                 ...state,
                 ...action.data,
                 isAuth: true
             }
-        case errorData:
+        case authActionTypes.errorData:
             return{
                 ...state,
                 error: action.error
@@ -30,9 +28,9 @@ export const authUserReducer = (state = initAuth, action)=>{
     }
 }
 
-export const authAC = (id,email,login)=>{
+export const authAC = (id:null | number,email: null | string, login: null | string):authACtype=>{
     return{
-        type: getAuth,
+        type: authActionTypes.getAuth,
         data:{
             id,
             email,
@@ -40,16 +38,17 @@ export const authAC = (id,email,login)=>{
         }
     }
 }
-export const errorAC = (error)=>{
+
+export const errorAC = (error: null | string):errorACtype=>{
     return{
-        type: errorData,
+        type: authActionTypes.errorData,
         error
     }
 }
 
 //thunkCreator
 export const getUserDataIsAuthThunkCreator = () =>{
-    return async dispatch=>{
+    return async (dispatch:any)=>{
         try{
             const data = await authAPI.getUserAuth();
             if (data.resultCode === 0){

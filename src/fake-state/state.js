@@ -1,6 +1,6 @@
 import {act} from "@testing-library/react";
-import postReducer from "./postReducer";
-import messageReducer from "./messageReducer";
+import postReducer from "../Redux/postReducer";
+import messageReducer from "../Redux/messageReducer";
 
 const store ={
     _state: {
