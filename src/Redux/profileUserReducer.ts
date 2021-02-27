@@ -7,6 +7,7 @@ import {
   setStatusACtype,
   toggleFetchingACtype
 } from "../type/ProfileTypes";
+import {Dispatch} from "redux";
 
 const initState: InitialState = {
   status: null,
@@ -65,10 +66,12 @@ export const setPhotoAC = (photo: string | null | any): setPhotoACtype => {
 }
 // thunkCreator
 export const getProfileThunkCreator = (id: number) => {
-  return async (dispatch: any) => {
+  return async (dispatch: Dispatch) => {
     try {
+      debugger
       const data = await profileAPI.getProfileUser(id)
-      dispatch(setProfileAC(data))
+      // @ts-ignore
+      dispatch(setProfileAC(data.data))
     } catch (error) {
       console.log(error)
     }
@@ -76,10 +79,10 @@ export const getProfileThunkCreator = (id: number) => {
 }
 
 export const ProfileStatusThunkCreator = (id: number) => {
-  return async (dispatch: any) => {
+  return async (dispatch: Dispatch) => {
     try {
       const data = await profileAPI.getStatus(id)
-      dispatch(setStatusAC(data))
+      dispatch(setStatusAC(data.data))
     } catch (error) {
       console.log(error)
     }
@@ -87,10 +90,10 @@ export const ProfileStatusThunkCreator = (id: number) => {
 }
 
 export const updateProfileStatusThunkCreator = (status: string) => {
-  return async (dispatch: any) => {
+  return async (dispatch: Dispatch) => {
     try {
       const data = await profileAPI.updateStatus(status)
-      if (data.resultCode === 0) {
+      if (data.data.resultCode === 0) {
         dispatch(setStatusAC(status))
       }
     } catch (error) {
@@ -99,7 +102,7 @@ export const updateProfileStatusThunkCreator = (status: string) => {
   }
 }
 export const updatePhotoThunkCreator = (photo: string) => {
-  return async (dispatch: any) => {
+  return async (dispatch: Dispatch) => {
     try {
       const data = await profileAPI.updatePhoto(photo)
       if (data.data.resultCode === 0) {

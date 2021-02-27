@@ -1,10 +1,9 @@
 export interface InitialStateType {
     postData: {
         id: number,
-        text: string,
-        image: string
+        text: string | null,
+        image: string | null
     } []
-    newPost: string | null
 }
 export enum PostActionTypes {
     add_post = "ADDPOST",
@@ -13,11 +12,9 @@ export enum PostActionTypes {
 export interface addPostActionCreatorType{
     type: PostActionTypes.add_post,
     image: string
+    postText: string
 }
-export interface updatePostActionCreatorType{
-    type: PostActionTypes.update_post,
-    payload: string
-}
+
 export type PostAction =
     addPostActionCreatorType
-    | updatePostActionCreatorType
+

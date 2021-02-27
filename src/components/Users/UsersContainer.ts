@@ -8,8 +8,9 @@ import {
 } from "../../Redux/usersReducer";
 import Users from "./UsersClassComp";
 import {profileAPI, userAPI} from "./../API/API";
+import {AppReducer} from "../../Redux/redux-store";
 
-const mapStateToProps = (state)=>{
+const mapStateToProps = (state: AppReducer)=>{
     return{
         UsersPage: state.UsersPage.users,
         CurrentPage: state.UsersPage.currentPage,
@@ -17,8 +18,20 @@ const mapStateToProps = (state)=>{
         pageSize: state.UsersPage.pageSize,
         isFetching: state.UsersPage.isFetching,
         disableButton: state.UsersPage.disableButton
-
     }
+}
+interface mapStateToPropsType {
+    CurrentPage: number,
+    totalCountUsers: number,
+    pageSize: number,
+    isFetching: boolean,
+    disableButton: number[]
+}
+interface  mapDispatchToPropsType{
+    FollowActionCreator:  ()=>void,
+    UnFollowActionCreator: ()=>void,
+    setUsersActionCreator: (users: any[],count:number)=>void,
+    getUsersThunkCreator: (currentPage:number,pageSize:number)=>void
 }
 
 const UsersContainer = connect(mapStateToProps,{

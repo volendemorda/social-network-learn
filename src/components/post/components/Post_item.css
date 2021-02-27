@@ -1,0 +1,19 @@
+.post{
+
+}
+.post-header img{
+    max-height: 400px;
+}
+.post-content{
+    background: #202020;
+    padding: 2.5rem;
+    overflow: hidden;
+    box-shadow: 0 15px 25px rgba(0,0,0,0.35);
+    margin-bottom: 30px;
+    border-radius: 5px;
+    margin-bottom: 2rem;
+}
+.post-item__text{
+    font-size: 1.4rem;
+    color: #D2D2D2;
+}

@@ -3,26 +3,35 @@ import "../Users/users.css"
 import unKnow from "../../image/unknow.jpg"
 import { NavLink } from "react-router-dom"
 import Button from '@material-ui/core/Button';
+import {UsersTypes} from "../../type/UsersTypes";
 
-
-const UserAPI = ({totalCountUsers,pageSize,CurrentPage,onChangedPage,UsersPage,disableButton,UnfollowThunkCreator,followThunkCreator}) => {
-  const [countPage, setCountPage] = React.useState(1)
+interface propsType {
+  totalCountUsers:  number
+  pageSize: number
+  CurrentPage: number
+  onChangedPage: (item:number)=> void
+  UsersPage: Array<UsersTypes>
+  disableButton: Array<number> | null
+  UnfollowThunkCreator: (id:number)=> void
+  followThunkCreator: (id:number)=> void
+}
+const UserAPI: React.FC<propsType> = ({totalCountUsers,pageSize,CurrentPage,onChangedPage,UsersPage,disableButton,UnfollowThunkCreator,followThunkCreator}) => {
+  const [countPage, setCountPage] = React.useState<number>(1)
   const countPageUsers = Math.ceil(totalCountUsers / pageSize)
   let leftPortionPageNumber = (countPage - 1) * pageSize + 1
-  let rightPortionNumber = countPage * pageSize //10
-  const page = []
+  let rightPortionNumber = countPage * pageSize
+  const page:Array<number> = []
   for (let i = 1; i <= countPageUsers; i++) {
     page.push(i)
   }
   const generateButtonPage = () => {
-      
     return (
       <div className="pagination__container">
        <button disabled={countPage < 2} onClick={() => {setCountPage(countPage - 1)}}
         className="list__button">Обратно</button>
         {page
           .filter((p) => p >= leftPortionPageNumber && p <= rightPortionNumber)
-          .map((item) => {
+          .map((item:number) => {
             return (
               <button
                 key={item}
@@ -42,12 +51,11 @@ const UserAPI = ({totalCountUsers,pageSize,CurrentPage,onChangedPage,UsersPage,d
         <button 
         onClick={() => {setCountPage(countPage + 1)}}
         className="list__button">Вперед</button>
-
       </div>
     )
   }
   const generateComponentUser = () => {
-    return UsersPage.map((u) => {
+    return UsersPage.map((u:UsersTypes) => {
       return (
         <div className="usersPage__wrapper">
           <div className="usersPage__row">
@@ -71,10 +79,11 @@ const UserAPI = ({totalCountUsers,pageSize,CurrentPage,onChangedPage,UsersPage,d
               </div>
             </div>
           </div>
-          {u.followed ? (
+          {u.followed
+              ? (
             <Button
-              disable={disableButton.find((id) => id === u.id)}
-              variant="outlined"
+                // disabled={disableButton?.find(id => id === u.id)}
+                variant="outlined"
               color="primary"
               onClick={() => {
                 UnfollowThunkCreator(u.id)
@@ -85,8 +94,8 @@ const UserAPI = ({totalCountUsers,pageSize,CurrentPage,onChangedPage,UsersPage,d
             </Button>
           ) : (
             <Button
-              disable={disableButton.find((id) => id === u.id)}
-              variant="outlined"
+                // disabled={disableButton?.find((id) => id === u.id)}
+                variant="outlined"
               color="primary"
               onClick={() => {
                 followThunkCreator(u.id)

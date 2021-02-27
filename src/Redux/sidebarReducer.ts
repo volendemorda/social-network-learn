@@ -35,8 +35,8 @@ export const setProfileDataThunkCreator = () => {
   return async (dispatch: any) => {
     try {
       const data = await authAPI.getUserAuth()
-      if (data.resultCode === 0) {
-        const { id, email, login } = data.data
+      if (data.data.resultCode === 0) {
+        const { id, email, login } = data.data.data
         dispatch(setProfileDataAC(id, email, login))
       }
     } catch (error) {

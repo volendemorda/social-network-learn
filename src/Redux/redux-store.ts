@@ -15,9 +15,13 @@ const reducers = combineReducers({
     ProfilePage: userProfileReducer,
     Sidebar: sidebarReducer
 })
+type  ReducerType = typeof reducers
+export type AppReducer = ReturnType<ReducerType>
+// @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducers,composeEnhancers(
     applyMiddleware(thunkMiddleware)
   ));
   
+// @ts-ignore
 export default store

@@ -51,8 +51,8 @@ export const getUserDataIsAuthThunkCreator = () =>{
     return async (dispatch:any)=>{
         try{
             const data = await authAPI.getUserAuth();
-            if (data.resultCode === 0){
-                const {id,email,login} = data.data
+            if (data.data.resultCode === 0){
+                const {id,email,login} = data.data.data
                 dispatch(authAC(id,email,login))
             }
         }

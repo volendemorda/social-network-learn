@@ -10,6 +10,7 @@ import {
     toggleIsGetDataFollowsActionCreatorType,
     UnFollowActionCreatorType
 } from "../type/UsersTypes";
+import {Dispatch} from "redux";
 
 const initUsers: initUsersTypes = {
     users:[],
@@ -117,11 +118,13 @@ export const toggleIsGetDataFollowsActionCreator = (buttonId:number,flag: boolea
 }
 // thunkCreator
 export const getUsersThunkCreator = (CurrentPage: number, pageSize: number)=>{
-    return async (dispatch:any)=>{
+    return async (dispatch:Dispatch)=>{
        try{
+           debugger
             dispatch(toggleIsFetchingActionCreator(true))
             const data = await userAPI.getUsers(CurrentPage, pageSize)
-            dispatch(setUsersActionCreator(data.items,data.totalCount))
+            // @ts-ignore
+           dispatch(setUsersActionCreator(data.data.items,data.data.totalCount))
             dispatch(toggleIsFetchingActionCreator(false))
        }
        catch(error){
@@ -131,26 +134,27 @@ export const getUsersThunkCreator = (CurrentPage: number, pageSize: number)=>{
 }
 
 export const UnfollowThunkCreator = (id: number)=>{
-    return async (dispatch:any)=>{
+    return async (dispatch:Dispatch)=>{
         try{
             dispatch(toggleIsGetDataFollowsActionCreator(id,true))
             const data = await userAPI.unFollow(id)
-            if (data.resultCode === 0){
+            if (data.data.resultCode === 0){
                 dispatch(UnFollowActionCreator(id))
                 dispatch(toggleIsGetDataFollowsActionCreator(id,false))
             }
         }
         catch(error){
+
            console.log(error)
         }
     }
 }
 export const followThunkCreator = (id: number)=>{
-    return async (dispatch:any)=>{
+    return async (dispatch:Dispatch)=>{
         try{
             dispatch(toggleIsGetDataFollowsActionCreator(id,true))
             const data = await userAPI.follow(id)
-                if (data.resultCode === 0) {
+                if (data.data.resultCode === 0) {
                     dispatch(FollowActionCreator(id))
                     dispatch(toggleIsGetDataFollowsActionCreator(id,false))
                 }

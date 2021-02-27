@@ -3,6 +3,7 @@ export interface InitialState {
     profile: null | ProfileType[]
 }
 export interface ProfileType{
+    aboutMe: string
     userId: number
     lookingForAJob: boolean
     lookingForAJobDescription: string

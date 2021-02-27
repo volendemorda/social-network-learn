@@ -1,12 +1,21 @@
 export interface initUsersTypes{
-    users: any[],
+    users: Array<UsersTypes>,
     currentPage: number,
     totalCountUsers: number,
     pageSize: number,
     isFetching: boolean,
     disableButton: any[]
 }
-
+export interface UsersTypes{
+    id: number,
+    name: string,
+    status: string,
+    photos: {
+        small: null | string,
+        large: null | string
+    },
+    followed: boolean
+}
 export enum listActionTypes{
     Follow = 'FOLLOW',
     UnFollow = 'UNFOLLOW',

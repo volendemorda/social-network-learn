@@ -9,6 +9,7 @@ import Login from "./components/Login/login";
 import ProfileUserContainer from "./components/Profile/profileUserContainer";
 import SidebarContainer from './components/Sidebar/sidebarContainer'
 import SettingsProfileContainer from './components/Settings/SettingsProfileContainer'
+import ChatPage from "./components/ChatPage/ChatPage";
 
 
 const App = ()=>{
@@ -23,6 +24,7 @@ const App = ()=>{
          <Route path="/login" render={()=><Login/>}/>
          <Route path="/profile/:userId?" render={()=><ProfileUserContainer/>}/>
          <Route path="/Settings" render={()=> <SettingsProfileContainer/>}/>
+         <Route path="/ChatPage" render={()=> <ChatPage/>}/>
      </div>
     </div>
   )
