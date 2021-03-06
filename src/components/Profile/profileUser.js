@@ -2,7 +2,7 @@ import React from "react"
 import FacebookIcon from "@material-ui/icons/Facebook"
 import GitHubIcon from "@material-ui/icons/GitHub"
 import InstagramIcon from "@material-ui/icons/Instagram"
-import unKnow from "./../../../src/image/unknow.jpg"
+import unKnow from "../../accecs/image/unknow.jpg"
 import ProfileStatus from "./profileStatus"
 import Proloader from "../Users/proloader/proloader"
 

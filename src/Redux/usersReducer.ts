@@ -1,4 +1,4 @@
-import {userAPI} from "../components/API/API";
+import {userAPI} from "../components/API/UserAPI";
 import {
     ActionType,
     FollowActionCreatorType,

@@ -7,7 +7,8 @@ import {
     UnFollowActionCreator, UnfollowThunkCreator
 } from "../../Redux/usersReducer";
 import Users from "./UsersClassComp";
-import {profileAPI, userAPI} from "./../API/API";
+import {profileAPI} from "./../API/profileAPI";
+import {userAPI} from "./../API/UserAPI"
 import {AppReducer} from "../../Redux/redux-store";
 
 const mapStateToProps = (state: AppReducer)=>{

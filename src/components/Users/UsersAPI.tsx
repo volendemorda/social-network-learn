@@ -1,6 +1,6 @@
 import React from "react"
 import "../Users/users.css"
-import unKnow from "../../image/unknow.jpg"
+import unKnow from "../../accecs/image/unknow.jpg"
 import { NavLink } from "react-router-dom"
 import Button from '@material-ui/core/Button';
 import {UsersTypes} from "../../type/UsersTypes";
@@ -82,6 +82,7 @@ const UserAPI: React.FC<propsType> = ({totalCountUsers,pageSize,CurrentPage,onCh
           {u.followed
               ? (
             <Button
+                // todo: рефактор
                 // disabled={disableButton?.find(id => id === u.id)}
                 variant="outlined"
               color="primary"

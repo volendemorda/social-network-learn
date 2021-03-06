@@ -1,5 +1,5 @@
 
-import {authAPI} from "../components/API/API";
+import {authAPI} from "../components/API/authAPI";
 import {ActionType, authActionTypes, authACtype, errorACtype, initAuthStateTypes} from './../type/AuthTypes'
 
 const initAuthState:initAuthStateTypes = {

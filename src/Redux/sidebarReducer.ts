@@ -1,4 +1,4 @@
-import { authAPI } from "../components/API/API"
+import { authAPI } from "../components/API/authAPI"
 import {InitialState, listActionType, setProfileDataACtype} from "../type/SidebarTypes";
 
 

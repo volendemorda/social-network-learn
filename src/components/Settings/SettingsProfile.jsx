@@ -1,5 +1,5 @@
 import React from 'react'
-import photo from './../../image/unknow.jpg'
+import photo from '../../accecs/image/unknow.jpg'
 import './settings.css'
 
 const SettingsProfile = () =>{

@@ -27,11 +27,7 @@ class ProfileUserContainer extends React.Component {
       this.refreshProfile()
   }
   render() { 
-    return(
-      <>
-      <UserProfile {...this.props} isOwner={!this.props.match.params.userId}/>
-      </>
-    )
+    return <UserProfile {...this.props} isOwner={!this.props.match.params.userId}/>
   }
 }
 const mapStateToProps = (state) => {

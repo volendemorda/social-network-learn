@@ -7,13 +7,19 @@ import PostAddIcon from '@material-ui/icons/PostAdd';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import SettingsIcon from '@material-ui/icons/Settings';
 
- const Sidebar = (props) => {
+interface PropsType{
+  id:number
+  login: string
+  email: string
+}
+
+ const Sidebar: React.FC<PropsType>= ({id,login,email}) => {
    return (
      <aside className={SidebarStyle.sidebar}>
        <div className={SidebarStyle.container__sidebar}>
          <div className={SidebarStyle.container__flex}>
          <div className="photo__profile profile__photo"><img src="https://fs1.inspider.ru/photo/2013/03/28/a97d5cc5ca99fb659ff6522f95c92bc0.jpg" alt=""/><img src="" alt=""/></div>
-          <div className={SidebarStyle.sidebar__title}>{props.Sidebar.login}</div>  
+          <div className={SidebarStyle.sidebar__title}>{login}</div>  
          </div>
          <nav className={SidebarStyle.sidebar__menu}>
            <ul className={SidebarStyle.sidebar__list}>
@@ -23,8 +29,8 @@ import SettingsIcon from '@material-ui/icons/Settings';
                </NavLink>
              </li>
              <li>
-               <NavLink to="/dialogs" activeClassName={SidebarStyle.active} className={SidebarStyle.sidebar__link}>
-                 <MessageIcon/> Сообщения
+               <NavLink to="/ChatPage" activeClassName={SidebarStyle.active} className={SidebarStyle.sidebar__link}>
+                 <MessageIcon/> Чат
                </NavLink>
              </li>
              <li>
@@ -41,11 +47,6 @@ import SettingsIcon from '@material-ui/icons/Settings';
              <li>
                <NavLink to="/Settings" activeClassName={SidebarStyle.active} className={SidebarStyle.sidebar__link}>
                  <SettingsIcon/> Настройки
-               </NavLink>
-             </li>
-             <li>
-               <NavLink to="/ChatPage" activeClassName={SidebarStyle.active} className={SidebarStyle.sidebar__link}>
-                  Чат
                </NavLink>
              </li>
            </ul>

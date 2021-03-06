@@ -1,4 +1,4 @@
-import { profileAPI } from "../../src/components/API/API"
+import { profileAPI } from "../../src/components/API/profileAPI"
 import {
   ActionType,
   InitialState,

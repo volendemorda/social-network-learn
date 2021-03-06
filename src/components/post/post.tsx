@@ -1,4 +1,4 @@
-import React from "react"
+import React, {ChangeEvent} from "react"
 import style from "./post.module.css"
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
@@ -45,7 +45,7 @@ const Post: React.FC<PropsType> = ({PostPage, addPostActionCreator}) => {
                 <div className={style.post__form}>
                     <textarea
                         className={style.postAdd__textarea}
-                        onChange={(e) => setTextPost(e.currentTarget.value)}
+                        onChange={(e:ChangeEvent<HTMLTextAreaElement>) => setTextPost(e.currentTarget.value)}
                         value={textPost}
                         placeholder="Напишите что-нибудь">
                     </textarea>
@@ -66,5 +66,5 @@ const Post: React.FC<PropsType> = ({PostPage, addPostActionCreator}) => {
         </div>
     )
 }
-// @ts-ignore
+//todo: сделать
 export default Post
