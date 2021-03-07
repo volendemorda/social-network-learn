@@ -29,24 +29,3 @@ export enum listActionTypes {
     toggleFetching = "toggleFetching",
     setPhoto = "setPhoto",
 }
-export interface setProfileACtype {
-    type: listActionTypes.setProfile
-    profile: any[]
-}
-export interface setStatusACtype {
-    type: listActionTypes.setStatus
-    status: string
-}
-export interface toggleFetchingACtype {
-    type: listActionTypes.toggleFetching
-    isFetchind: boolean
-}
-export interface setPhotoACtype {
-    type: listActionTypes.setPhoto
-    photo: string | null
-}
-export type ActionType =
-    | setProfileACtype
-    | setStatusACtype
-    | toggleFetchingACtype
-    | setPhotoACtype

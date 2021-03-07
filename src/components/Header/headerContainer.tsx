@@ -1,19 +1,21 @@
 import React from 'react';
-import './headers.css'
-import Header from "./header";
 import {connect} from "react-redux";
-import {authAC, getUserDataIsAuthThunkCreator} from "../../Redux/auth";
-import {getAuthData, getEmailData, getLoginData} from "./reselect.header";
+import {getUserDataIsAuthThunkCreator,AuthAction} from "../../Redux/auth";
+import {activeSidebar, getAuthData, getEmailData, getLoginData} from "./reselect.header";
 import {AppReducer} from "../../Redux/redux-store";
+import Header from "./header";
 
-export interface propsType {
-    getUserDataIsAuthThunkCreator: () => void
-    isAuth: boolean
-    email: string
-    login: string
+
+type PropsType = {
+    getUserDataIsAuthThunkCreator: ()=> Promise<void>,
+    isAuth: boolean,
+    email: string,
+    login: string, 
+    isActive: boolean,
+    activateSidebar: (flag: boolean)=>void
 }
 
-const HeaderContainer: React.FC<propsType> = (props) => {
+const HeaderContainer: React.FC<PropsType> = (props) => {
     React.useEffect(() => {
         props.getUserDataIsAuthThunkCreator()
     }, [])
@@ -24,14 +26,14 @@ export const mapStateToProps = (state: AppReducer) => {
     return {
         isAuth: getAuthData(state),
         login: getLoginData(state),
-        email: getEmailData(state)
+        email: getEmailData(state),
+        isActive: activeSidebar(state)
     }
 }
 
 export default connect(mapStateToProps, {
-    authAC,
-    getUserDataIsAuthThunkCreator
-
+    getUserDataIsAuthThunkCreator,
+    activateSidebar: AuthAction.activateSidebar
 })(HeaderContainer)
 
 

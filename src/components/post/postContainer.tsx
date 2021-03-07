@@ -1,4 +1,3 @@
-import React from 'react'
 import {addPostActionCreator} from "../../Redux/postReducer";
 import Post from "./post";
 import {connect} from "react-redux";
@@ -15,5 +14,5 @@ export default compose(
     connect(mapStateToProps,{
         addPostActionCreator
     }),
-    withAuthRedirect
+    // withAuthRedirect
 )(Post)

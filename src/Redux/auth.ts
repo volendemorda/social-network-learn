@@ -1,13 +1,16 @@
 
 import {authAPI} from "../components/API/authAPI";
-import {ActionType, authActionTypes, authACtype, errorACtype, initAuthStateTypes} from './../type/AuthTypes'
+import {authActionTypes,initAuthStateTypes} from './../type/AuthTypes'
+import { ThunkDispatchType, ThunkType} from "../type/ThunkType";
+import { inferActionType } from "./redux-store";
 
 const initAuthState:initAuthStateTypes = {
         id: null,
         email: null,
         login: null,
         isAuth: false,
-        error: null
+        error: null,
+        isActive: false
 }
 
 export const authUserReducer = (state = initAuthState, action:ActionType):initAuthStateTypes=>{
@@ -18,46 +21,40 @@ export const authUserReducer = (state = initAuthState, action:ActionType):initAu
                 ...action.data,
                 isAuth: true
             }
+        case authActionTypes.ActivateSidebar:
+            return{
+                ...state,
+                isActive: action.isActive
+            }
         case authActionTypes.errorData:
             return{
                 ...state,
                 error: action.error
                 }
+        
         default:
             return state
     }
 }
-
-export const authAC = (id:null | number,email: null | string, login: null | string):authACtype=>{
-    return{
-        type: authActionTypes.getAuth,
-        data:{
-            id,
-            email,
-            login
-        }
-    }
-}
-
-export const errorAC = (error: null | string):errorACtype=>{
-    return{
-        type: authActionTypes.errorData,
-        error
-    }
-}
-
+type ActionType = inferActionType<typeof AuthAction>
+export const AuthAction ={
+    authAC: (id:null | number,email: null | string, login: null | string)=>({type: authActionTypes.getAuth,data:{id,email,login}} as const),
+    activateSidebar:(isActive:boolean)=>({type: authActionTypes.ActivateSidebar,isActive} as const),
+    errorAC: (error: null | string)=>({type: authActionTypes.errorData,error} as const)
+} 
+ 
 //thunkCreator
-export const getUserDataIsAuthThunkCreator = () =>{
-    return async (dispatch:any)=>{
+export const getUserDataIsAuthThunkCreator = (): ThunkType=>{
+    return async (dispatch:ThunkDispatchType)=>{
         try{
             const data = await authAPI.getUserAuth();
             if (data.data.resultCode === 0){
                 const {id,email,login} = data.data.data
-                dispatch(authAC(id,email,login))
+                dispatch(AuthAction.authAC(id,email,login))
             }
         }
         catch(error){
-            dispatch(errorAC(error))
+            dispatch(AuthAction.errorAC(error))
         }
     }
 }

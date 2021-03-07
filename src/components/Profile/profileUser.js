@@ -4,7 +4,7 @@ import GitHubIcon from "@material-ui/icons/GitHub"
 import InstagramIcon from "@material-ui/icons/Instagram"
 import unKnow from "../../accecs/image/unknow.jpg"
 import ProfileStatus from "./profileStatus"
-import Proloader from "../Users/proloader/proloader"
+import Proloader from "../../accecs/proloader/proloader"
 
 const UserProfile = ({ profile, status, updateProfileStatusThunkCreator,isOwner,updatePhotoThunkCreator }) => {
   const onChangeFileUpload = (event)=>{

@@ -4,8 +4,9 @@ import unKnow from "../../accecs/image/unknow.jpg"
 import { NavLink } from "react-router-dom"
 import Button from '@material-ui/core/Button';
 import {UsersTypes} from "../../type/UsersTypes";
+import Pagination from "./Pagination";
 
-interface propsType {
+export interface propsType {
   totalCountUsers:  number
   pageSize: number
   CurrentPage: number
@@ -15,47 +16,10 @@ interface propsType {
   UnfollowThunkCreator: (id:number)=> void
   followThunkCreator: (id:number)=> void
 }
-const UserAPI: React.FC<propsType> = ({totalCountUsers,pageSize,CurrentPage,onChangedPage,UsersPage,disableButton,UnfollowThunkCreator,followThunkCreator}) => {
-  const [countPage, setCountPage] = React.useState<number>(1)
-  const countPageUsers = Math.ceil(totalCountUsers / pageSize)
-  let leftPortionPageNumber = (countPage - 1) * pageSize + 1
-  let rightPortionNumber = countPage * pageSize
-  const page:Array<number> = []
-  for (let i = 1; i <= countPageUsers; i++) {
-    page.push(i)
-  }
-  const generateButtonPage = () => {
-    return (
-      <div className="pagination__container">
-       <button disabled={countPage < 2} onClick={() => {setCountPage(countPage - 1)}}
-        className="list__button">Обратно</button>
-        {page
-          .filter((p) => p >= leftPortionPageNumber && p <= rightPortionNumber)
-          .map((item:number) => {
-            return (
-              <button
-                key={item}
-                className={
-                  item === CurrentPage
-                    ? `currentCountPage active`
-                    : `currentCountPage`
-                }
-                onClick={() => {
-                  onChangedPage(item)
-                }}
-              >
-                {item}
-              </button>
-            )
-          })}
-        <button 
-        onClick={() => {setCountPage(countPage + 1)}}
-        className="list__button">Вперед</button>
-      </div>
-    )
-  }
+
+const UserAPI: React.FC<propsType> = (props) => {
   const generateComponentUser = () => {
-    return UsersPage.map((u:UsersTypes) => {
+    return props.UsersPage.map((u:UsersTypes) => {
       return (
         <div className="usersPage__wrapper">
           <div className="usersPage__row">
@@ -87,7 +51,7 @@ const UserAPI: React.FC<propsType> = ({totalCountUsers,pageSize,CurrentPage,onCh
                 variant="outlined"
               color="primary"
               onClick={() => {
-                UnfollowThunkCreator(u.id)
+                props.UnfollowThunkCreator(u.id)
               }}
               className="usersPage__btn"
             >
@@ -99,7 +63,7 @@ const UserAPI: React.FC<propsType> = ({totalCountUsers,pageSize,CurrentPage,onCh
                 variant="outlined"
               color="primary"
               onClick={() => {
-                followThunkCreator(u.id)
+                props.followThunkCreator(u.id)
               }}
               className="usersPage__btn"
             >
@@ -112,7 +76,7 @@ const UserAPI: React.FC<propsType> = ({totalCountUsers,pageSize,CurrentPage,onCh
   }
   return (
     <div className="usersPage main">
-        {generateButtonPage()}
+        <Pagination {...props}/>
       <div className="container">
         <div className="usersPage__content">{generateComponentUser()}</div>
       </div>

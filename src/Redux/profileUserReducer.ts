@@ -1,24 +1,23 @@
 import { profileAPI } from "../../src/components/API/profileAPI"
 import {
-  ActionType,
   InitialState,
-  listActionTypes, ProfileType, setPhotoACtype,
+  listActionTypes,
+  ProfileType,
   setProfileACtype,
-  setStatusACtype,
-  toggleFetchingACtype
-} from "../type/ProfileTypes";
-import {Dispatch} from "redux";
+} from "../type/ProfileTypes"
+import { ThunkDispatchType, ThunkType } from "../type/ThunkType"
+import { inferActionType } from "./redux-store"
 
 const initState: InitialState = {
   status: null,
   profile: null,
 }
-export const userProfileReducer = (state = initState,action: ActionType): InitialState=> {
+export const userProfileReducer = (state = initState,action: ActionType): InitialState => {
   switch (action.type) {
     case listActionTypes.setProfile:
       return {
         ...state,
-        profile: action.profile
+        profile: action.profile,
       }
     case listActionTypes.setStatus:
       return {
@@ -30,83 +29,79 @@ export const userProfileReducer = (state = initState,action: ActionType): Initia
         ...state,
         profile: {
           ...state.profile,
-          photos: action.photo
-        } as any
+          photos: action.photo,
+        } as any,
       }
     default:
       return state
   }
 }
 
-export const setProfileAC = (profile: InitialState[]): setProfileACtype => {
-  return {
-    type: listActionTypes.setProfile,
-    profile,
-  }
+type ActionType = inferActionType<typeof ProfileAction>
+export const ProfileAction = {
+  setProfileAC: (profile: ProfileType[]): setProfileACtype =>
+    ({
+      type: listActionTypes.setProfile,
+      profile,
+    } as const),
+  setStatusAC: (status: string) =>
+    ({
+      type: listActionTypes.setStatus,
+      status,
+    } as const),
+  toggleFetchingAC: (isFetchind: boolean) =>
+    ({
+      type: listActionTypes.toggleFetching,
+      isFetchind,
+    } as const),
+  setPhotoAC: (photo: string | null) =>
+    ({
+      type: listActionTypes.setPhoto,
+      photo,
+    } as const),
 }
 
-export const setStatusAC = (status: string): setStatusACtype => {
-  return {
-    type: listActionTypes.setStatus,
-    status,
-  }
-}
-export const toggleFetchingAC = (isFetchind: boolean): toggleFetchingACtype => {
-  return {
-    type: listActionTypes.toggleFetching,
-    isFetchind,
-  }
-}
-
-export const setPhotoAC = (photo: string | null | any): setPhotoACtype => {
-  return {
-    type: listActionTypes.setPhoto,
-    photo,
-  }
-}
 // thunkCreator
-export const getProfileThunkCreator = (id: number) => {
-  return async (dispatch: Dispatch) => {
+export const getProfileThunkCreator = (id: number): ThunkType => {
+  return async (dispatch: ThunkDispatchType) => {
     try {
-      debugger
       const data = await profileAPI.getProfileUser(id)
-      // @ts-ignore
-      dispatch(setProfileAC(data.data))
+      dispatch(ProfileAction.setProfileAC(data.data))
     } catch (error) {
       console.log(error)
     }
   }
 }
 
-export const ProfileStatusThunkCreator = (id: number) => {
-  return async (dispatch: Dispatch) => {
+export const ProfileStatusThunkCreator = (id: number): ThunkType => {
+  return async (dispatch: ThunkDispatchType) => {
     try {
       const data = await profileAPI.getStatus(id)
-      dispatch(setStatusAC(data.data))
+      dispatch(ProfileAction.setStatusAC(data.data))
     } catch (error) {
       console.log(error)
     }
   }
 }
 
-export const updateProfileStatusThunkCreator = (status: string) => {
-  return async (dispatch: Dispatch) => {
+export const updateProfileStatusThunkCreator = (status: string): ThunkType => {
+  return async (dispatch: ThunkDispatchType) => {
     try {
       const data = await profileAPI.updateStatus(status)
       if (data.data.resultCode === 0) {
-        dispatch(setStatusAC(status))
+        dispatch(ProfileAction.setStatusAC(status))
       }
     } catch (error) {
       console.log(error)
     }
   }
 }
-export const updatePhotoThunkCreator = (photo: string) => {
-  return async (dispatch: Dispatch) => {
+export const updatePhotoThunkCreator = (photo: string): ThunkType => {
+  return async (dispatch: ThunkDispatchType) => {
     try {
       const data = await profileAPI.updatePhoto(photo)
       if (data.data.resultCode === 0) {
-        dispatch(setPhotoAC(data.data.data.photos))
+        dispatch(ProfileAction.setPhotoAC(data.data.data.photos))
       }
     } catch (error) {
       console.log(error)

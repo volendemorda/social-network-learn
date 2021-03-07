@@ -13,7 +13,7 @@ const ProfileStatus = (props) => {
     setStatus(props.status);
   }, [props.status]);
   const onChangeHandler = (event) => setStatus(event.currentTarget.value);
-  return (
+  return (~
     <>
       {editmode ? (
         <input

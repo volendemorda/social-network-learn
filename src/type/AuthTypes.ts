@@ -1,24 +1,14 @@
 export enum authActionTypes {
     getAuth = 'getAuth',
-    errorData = 'errorData'
+    errorData = 'errorData',
+    ActivateSidebar ='ActivateSidebar'
+
 }
 export interface initAuthStateTypes {
-    id: null | number,
-    email: null | string,
-    login: null | string,
-    isAuth: boolean,
+    id: null | number
+    email: null | string
+    login: null | string
+    isAuth: boolean
     error: null | string
+    isActive: boolean
 }
-export interface authACtype {
-    type: authActionTypes.getAuth,
-    data:{
-        id: null | number,
-        email: null | string,
-        login: null | string
-    }
-}
-export interface errorACtype {
-    type: authActionTypes.errorData,
-    error: string | null
-}
-export type ActionType =  authACtype | errorACtype

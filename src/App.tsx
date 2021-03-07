@@ -17,7 +17,7 @@ const App = () => {
             <HeaderContainer/>
             <SidebarContainer/>
             <Switch>
-                {/*<Route path="/posts" render={() => <PostContainer/>}/>*/}
+                <Route path="/posts" render={() => <PostContainer/>}/>
                 <Route path="/users" render={() => <UsersContainer/>}/>
                 <Route path="/login" render={() => <Login/>}/>
                 <Route path="/profile/:userId?" render={() => <ProfileUserContainer/>}/>

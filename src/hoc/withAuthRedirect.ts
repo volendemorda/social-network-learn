@@ -1,17 +1,16 @@
-import React from 'react'
-import {Redirect} from "react-router-dom";
+// import React from 'react'
+// import {Redirect} from "react-router-dom";
 
-
-export const withAuthRedirect = (Component:any)=>{
-    class RedirectComponent extends React.Component{
-        render() {
-            if (!this.props.AuthPage){
-                return (
-                    <Redirect to={'/login'}/>
-                )
-            }
-            return <Component {...this.props}/>
-        }
-    }
-    return RedirectComponent
-}
+// export const withAuthRedirect = (Component)=>{
+//     class RedirectComponent extends React.Component{
+//         render() {
+//             if (!this.props.AuthPage){
+//                 return (
+//                     <Redirect to={'/login'}/>
+//                 )
+//             }
+//             return <Component {...this.props}/>
+//         }
+//     }
+//     return RedirectComponent
+// }

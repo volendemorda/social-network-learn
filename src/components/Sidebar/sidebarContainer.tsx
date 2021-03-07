@@ -3,28 +3,32 @@ import Sidebar from "./sidebar"
 import { connect } from "react-redux"
 import { setProfileDataThunkCreator } from "../../Redux/sidebarReducer"
 import { AppReducer } from "../../Redux/redux-store"
+import { ProfileType } from "../../type/ProfileTypes"
+import { AuthAction } from "../../Redux/auth"
 
-interface PropsType {
-  setProfileDataThunkCreator: () => void
-  id: number
-  login: string
-  email: string
+type PropsType = {
+  setProfileDataThunkCreator: ()=> void,
+  Sidebar: null | ProfileType,
+  isActive: boolean
 }
 
-const SidebarContainer: React.FC<PropsType> = ({setProfileDataThunkCreator,id,login,email})=>{
+const SidebarContainer: React.FC<PropsType> = (props)=>{
   React.useEffect(() => {
-    setProfileDataThunkCreator()
+    props.setProfileDataThunkCreator()
   },[])
   return(
-    <Sidebar/>
+    <Sidebar {...props}/>
   )
 }
 
 const mapStateToProps = (state: AppReducer) => {
   return {
-    Sidebar: state.Sidebar
+    Sidebar: state.Sidebar.profile,
+    isActive: state.AuthPage.isActive
   }
 }
 export default connect(mapStateToProps, {
   setProfileDataThunkCreator,
+  activateSidebar: AuthAction.activateSidebar
 })(SidebarContainer)
+  

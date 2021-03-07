@@ -3,7 +3,7 @@ import {instance} from "./API";
 
 export const profileAPI = {
     getProfileUser(id:number){
-        return instance.get<ProfileType>(`/profile/${id}`)
+        return instance.get<Array<ProfileType>>(`/profile/${id}`)
     },
     updateStatus(status:string){
         return instance.put('/profile/status',{status})

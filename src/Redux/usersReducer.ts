@@ -1,167 +1,136 @@
-import {userAPI} from "../components/API/UserAPI";
+import { ThunkDispatchType } from "./../type/ThunkType"
+import { userAPI } from "../components/API/UserAPI"
 import {
-    ActionType,
-    FollowActionCreatorType,
-    initUsersTypes,
-    listActionTypes,
-    pageUsersActionCreatorType,
-    setUsersActionCreatorType,
-    toggleIsFetchingActionCreatorType,
-    toggleIsGetDataFollowsActionCreatorType,
-    UnFollowActionCreatorType
-} from "../type/UsersTypes";
-import {Dispatch} from "redux";
+  initUsersTypes,
+  listActionTypes,
+  UsersTypes,
+} from "../type/UsersTypes"
+import { ThunkType } from "../type/ThunkType"
+import { inferActionType } from "./redux-store"
 
 const initUsers: initUsersTypes = {
-    users:[],
-    currentPage: 1,
-    totalCountUsers: 0,
-    pageSize: 9,
-    isFetching: false,
-    disableButton: []
+  users: [],
+  currentPage: 1,
+  totalCountUsers: 0,
+  pageSize: 9,
+  isFetching: false,
+  disableButton: [],
 }
-export const usersReducer = (state = initUsers, action: ActionType):initUsersTypes=>{
-    switch (action.type){
-        case listActionTypes.Follow:
-          return {
-              ...state,
-              users: state.users.map(u=>{
-                  if (u.id === action.userId){
-                     return {
-                         ...u,
-                         followed: true
-                         
-                     }
-                  }
-                  return u
-              })
+export const usersReducer = (state = initUsers,action: ActionType): initUsersTypes => {
+  switch (action.type) {
+    case listActionTypes.Follow:
+      return {
+        ...state,
+        users: state.users.map((u) => {
+          if (u.id === action.userId) {
+            return {
+              ...u,
+              followed: true,
+            }
           }
-        case listActionTypes.UnFollow:
+          return u
+        }),
+      }
+    case listActionTypes.UnFollow:
+      return {
+        ...state,
+        users: state.users.map((u) => {
+          if (u.id === action.userId) {
             return {
-                ...state,
-                users: state.users.map(u=>{
-                    if (u.id === action.userId){
-                        return {
-                            ...u,
-                            followed: false
-                        }
-                    }
-                    return u
-                })
+              ...u,
+              followed: false,
             }
-        case listActionTypes.setUser:
-            return {
-                ...state,
-                users: [...action.users],
-                totalCountUsers: action.count
-            }
-        case listActionTypes.SetPageUsers:
-            return {
-                ...state,
-                currentPage: action.page
-            }
-        case listActionTypes.Fetching:
-            return {
-                ...state,
-                isFetching: action.flag
-            }
-        case listActionTypes.disableInProgressFollow:
-            return {
-                ...state,
-                isFetching: action.flag,
-                disableButton: action.flag 
-                ? [...state.disableButton, action.buttonId] 
-                : [state.disableButton.filter(id=> id!==action.buttonId)] 
-            }
-        default:
-            return state
-    }
+          }
+          return u
+        }),
+      }
+    case listActionTypes.setUser:
+      return {
+        ...state,
+        users: [...action.users],
+        totalCountUsers: action.count,
+      }
+    case listActionTypes.SetPageUsers:
+      return {
+        ...state,
+        currentPage: action.page,
+      }
+    case listActionTypes.Fetching:
+      return {
+        ...state,
+        isFetching: action.flag,
+      }
+    case listActionTypes.disableInProgressFollow:
+      return {
+        ...state,
+        isFetching: action.flag,
+        disableButton: action.flag
+          ? [...state.disableButton, action.buttonId]
+          : [state.disableButton.filter((id) => id !== action.buttonId)],
+      }
+    default:
+      return state
+  }
+}
+type ActionType = inferActionType<typeof UserAction>
+
+export const UserAction = {
+  FollowActionCreator: (userId: number) => ({type: listActionTypes.Follow, userId} as const),
+  UnFollowActionCreator: (userId: number) => ({type: listActionTypes.UnFollow, userId} as const),
+  setUsersActionCreator: (users: UsersTypes[], count: number) =>
+  ({type: listActionTypes.setUser, users, count} as const),
+  pageUsersActionCreator: (page: number) => ({type: listActionTypes.SetPageUsers, page} as const),
+  toggleIsFetchingActionCreator: (flag: boolean) => ({type: listActionTypes.Fetching, flag}as const),
+  toggleIsGetDataFollowsActionCreator: (buttonId: number, flag: boolean) => ({
+      type: listActionTypes.disableInProgressFollow,
+      buttonId,
+      flag,
+  }as const),
 }
 
-export const FollowActionCreator = (userId: number): FollowActionCreatorType=>{
-    return{
-        type:listActionTypes.Follow,
-        userId
-    }
-}
-export const UnFollowActionCreator = (userId:number):UnFollowActionCreatorType=> {
-    return {
-        type: listActionTypes.UnFollow,
-        userId
-    }
-}
-export const setUsersActionCreator = (users: any[],count: number):setUsersActionCreatorType=>{
-    return{
-        type: listActionTypes.setUser,
-        users,
-        count
-    }
-}
-export const pageUsersActionCreator = (page: number):pageUsersActionCreatorType=>{
-    return{
-        type: listActionTypes.SetPageUsers,
-        page
-    }
-}
-export const toggleIsFetchingActionCreator = (flag: boolean):toggleIsFetchingActionCreatorType=>{
-    return{
-        type: listActionTypes.Fetching,
-        flag
-    }
-}
-export const toggleIsGetDataFollowsActionCreator = (buttonId:number,flag: boolean):toggleIsGetDataFollowsActionCreatorType=>{
-    return{
-        type: listActionTypes.disableInProgressFollow,
-        buttonId,
-        flag
-    }
-}
 // thunkCreator
-export const getUsersThunkCreator = (CurrentPage: number, pageSize: number)=>{
-    return async (dispatch:Dispatch)=>{
-       try{
-           debugger
-            dispatch(toggleIsFetchingActionCreator(true))
-            const data = await userAPI.getUsers(CurrentPage, pageSize)
-            // @ts-ignore
-           dispatch(setUsersActionCreator(data.data.items,data.data.totalCount))
-            dispatch(toggleIsFetchingActionCreator(false))
-       }
-       catch(error){
-           console.log(error)
-       }
+export const getUsersThunkCreator = (CurrentPage: number,pageSize: number): ThunkType => {
+  return async (dispatch: ThunkDispatchType) => {
+    try {
+      dispatch(UserAction.pageUsersActionCreator(CurrentPage))
+      dispatch(UserAction.toggleIsFetchingActionCreator(true))
+      const data = await userAPI.getUsers(CurrentPage, pageSize)
+      console.log("current",CurrentPage);
+      dispatch(
+        UserAction.setUsersActionCreator(data.data.items, data.data.totalCount)
+      )
+      dispatch(UserAction.toggleIsFetchingActionCreator(false))
+    } catch (error) {
+      console.log(error)
     }
+  }
 }
-
-export const UnfollowThunkCreator = (id: number)=>{
-    return async (dispatch:Dispatch)=>{
-        try{
-            dispatch(toggleIsGetDataFollowsActionCreator(id,true))
-            const data = await userAPI.unFollow(id)
-            if (data.data.resultCode === 0){
-                dispatch(UnFollowActionCreator(id))
-                dispatch(toggleIsGetDataFollowsActionCreator(id,false))
-            }
-        }
-        catch(error){
-
-           console.log(error)
-        }
+export const UnfollowThunkCreator = (id: number): ThunkType => {
+  return async (dispatch: ThunkDispatchType) => {
+    try {
+      dispatch(action.toggleIsGetDataFollowsActionCreator(id, true))
+      const data = await userAPI.unFollow(id)
+      if (data.data.resultCode === 0) {
+        dispatch(action.UnFollowActionCreator(id))
+        dispatch(action.toggleIsGetDataFollowsActionCreator(id, false))
+      }
+    } catch (error) {
+      console.log(error)
     }
+  }
 }
-export const followThunkCreator = (id: number)=>{
-    return async (dispatch:Dispatch)=>{
-        try{
-            dispatch(toggleIsGetDataFollowsActionCreator(id,true))
-            const data = await userAPI.follow(id)
-                if (data.data.resultCode === 0) {
-                    dispatch(FollowActionCreator(id))
-                    dispatch(toggleIsGetDataFollowsActionCreator(id,false))
-                }
-        }
-        catch(error){
-            console.log(error)
-        }
+export const followThunkCreator = (id: number): ThunkType => {
+  return async (dispatch: ThunkDispatchType) => {
+    try {
+      dispatch(action.toggleIsGetDataFollowsActionCreator(id, true))
+      const data = await userAPI.follow(id)
+      if (data.data.resultCode === 0) {
+        dispatch(action.FollowActionCreator(id))
+        dispatch(action.toggleIsGetDataFollowsActionCreator(id, false))
+      }
+    } catch (error) {
+      console.log(error)
     }
+  }
 }
 export default usersReducer

@@ -1,44 +1,37 @@
+import { ThunkDispatchType } from './../type/ThunkType';
 import { authAPI } from "../components/API/authAPI"
-import {InitialState, listActionType, setProfileDataACtype} from "../type/SidebarTypes";
+import {InitialState, listActionType} from "../type/SidebarTypes";
+import { ThunkType } from "../type/ThunkType";
+import { inferActionType } from "./redux-store";
+import { ProfileType } from '../type/ProfileTypes';
+import { profileAPI } from '../components/API/profileAPI';
 
 
-type ActionType = setProfileDataACtype
 
 const initState: InitialState = {
-  id: null,
-  email: null,
-  login: null
+  profile: null
 }
 
-export const sidebarReducer = (state = initState, action: ActionType):InitialState => {
+export const sidebarReducer = (state = initState, action:ActionType):InitialState => {
   switch (action.type) {
     case listActionType.setProfileUser:
-      return {...state,...action.data}
+      return {...state,...action.profile}
     default:
       return state
   }
 }
-
-const setProfileDataAC = (id: number | null, email: string | null, login: string | null):setProfileDataACtype => {
-  return {
-    type: listActionType.setProfileUser,
-    data: {
-      id,
-      email,
-      login,
-    },
-  }
-}
+type ActionType = inferActionType<typeof SidebarAction>
+export const SidebarAction = {
+  setProfileDataAC: (profile: ProfileType[]) => ({
+      type: listActionType.setProfileUser,profile})
+} 
 
 // thunkCreator
-export const setProfileDataThunkCreator = () => {
-  return async (dispatch: any) => {
+export const setProfileDataThunkCreator = ():ThunkType=> {
+  return async (dispatch: ThunkDispatchType) => {
     try {
-      const data = await authAPI.getUserAuth()
-      if (data.data.resultCode === 0) {
-        const { id, email, login } = data.data.data
-        dispatch(setProfileDataAC(id, email, login))
-      }
+      const data = await profileAPI.getProfileUser(14598)
+      dispatch(SidebarAction.setProfileDataAC(data.data))
     } catch (error) {
       console.log(error)
     }
