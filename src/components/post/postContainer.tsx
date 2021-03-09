@@ -1,18 +1,18 @@
-import {addPostActionCreator} from "../../Redux/postReducer";
+import {PostAction} from "../../Redux/postReducer";
 import Post from "./post";
 import {connect} from "react-redux";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import { AppReducer } from "../../Redux/redux-store";
 
-const mapStateToProps = (state:any)=>{
+const mapStateToProps = (state:AppReducer)=>{
     return{
-        PostPage: state.PostPage.postData,
-        AuthPage: state.AuthPage.isAuth
+        postData: state.PostPage.postData,
+        isAuth: state.AuthPage.isAuth
     }
 }
 export default compose(
     connect(mapStateToProps,{
-        addPostActionCreator
+        addPostActionCreator: PostAction.addPostActionCreator
     }),
     // withAuthRedirect
 )(Post)

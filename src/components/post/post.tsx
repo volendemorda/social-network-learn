@@ -5,13 +5,14 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
 import ProfileItem from "./components/ProfileItem";
 
-interface PropsType {
-    PostPage: {
+type propsType = {
+    postData:{
         id: number
-        text: string
-        image: string
+        text: string 
+        image: string 
     }[]
     addPostActionCreator: (text: string, image: any) => void
+    isAuth: boolean
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -26,17 +27,17 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     }),
 );
-const Post: React.FC<PropsType> = ({PostPage, addPostActionCreator}) => {
+const Post: React.FC<propsType> = (props) => {
     const [textPost, setTextPost] = React.useState('')
-    const [image, setImage] = React.useState(null)
+    const [image, setImage] = React.useState<null | string>(null)
     const generatePost = ()=>{
-        return PostPage.map(p=><ProfileItem id={p.id} text={p.text} image={p.image} key={p.id}/>)
+        return props.postData.map(p=><ProfileItem id={p.id} text={p.text} image={p.image} key={p.id}/>)
     }
     const classes = useStyles()
     const clickHandlerAddPost = () => {
         if (!textPost)
             return
-        addPostActionCreator(textPost, null)
+            props.addPostActionCreator(textPost, null)
         setTextPost('')
     }
     return (

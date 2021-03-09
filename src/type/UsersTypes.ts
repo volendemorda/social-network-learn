@@ -4,7 +4,7 @@ export interface initUsersTypes{
     totalCountUsers: number,
     pageSize: number,
     isFetching: boolean,
-    disableButton: any[]
+    disableButton: number[]
 }
 export interface UsersTypes{
     id: number,

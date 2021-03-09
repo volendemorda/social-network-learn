@@ -1,11 +1,19 @@
 import React from "react"
-import { propsType } from "../Header/headerContainer"
+import { MapPropsType } from "./UsersContainer"
 
-const Pagination: React.FC<propsType> = (props)=>{
+
+type MapDispatchType = {
+  getUsersThunkCreator: (item: number, pageSize: number) => void,
+  UnfollowThunkCreator: (id: number) => void,
+  followThunkCreator: (id: number) => void,
+  onChangedPage:(id: number)=> void
+}
+
+const Pagination: React.FC<MapPropsType & MapDispatchType> = (props)=>{
   const [countPage, setCountPage] = React.useState<number>(1)
-  const countPageUsers = Math.ceil(props.totalCountUsers / props.pageSize)
-  let leftPortionPageNumber = (countPage - 1) * props.pageSize + 1
-  let rightPortionNumber = countPage * props.pageSize
+  const countPageUsers:number = Math.ceil(props.totalCountUsers / props.pageSize)
+  let leftPortionPageNumber:number = (countPage - 1) * props.pageSize + 1
+  let rightPortionNumber:number = countPage * props.pageSize
   const page:Array<number> = []
   for (let i = 1; i <= countPageUsers; i++) {
     page.push(i)
@@ -14,9 +22,7 @@ const Pagination: React.FC<propsType> = (props)=>{
     <div className="pagination__container">
     <button disabled={countPage < 2} onClick={() =>
     {setCountPage(countPage - 1)
-      props.onChangedPage(leftPortionPageNumber - 1)
-      console.log("l",leftPortionPageNumber - 1);
-      
+      props.onChangedPage(leftPortionPageNumber - 1)      
     }
     }
      className="list__button">Обратно</button>
@@ -32,9 +38,7 @@ const Pagination: React.FC<propsType> = (props)=>{
                  : `currentCountPage`
              }
              onClick={() => {
-               props.onChangedPage(item)
-               console.log(item);
-               
+               props.onChangedPage(item)               
              }}
            >
              {item}
@@ -44,9 +48,7 @@ const Pagination: React.FC<propsType> = (props)=>{
      <button 
      onClick={() => {
        setCountPage(countPage + 1)
-       props.onChangedPage(rightPortionNumber + 1)
-       console.log("r",rightPortionNumber + 1);
-       
+       props.onChangedPage(rightPortionNumber + 1)       
      }
      }
      className="list__button">Вперед</button>

@@ -6,13 +6,12 @@ import { AppReducer } from "../../Redux/redux-store"
 import { ProfileType } from "../../type/ProfileTypes"
 import { AuthAction } from "../../Redux/auth"
 
-type PropsType = {
-  setProfileDataThunkCreator: ()=> void,
-  Sidebar: null | ProfileType,
-  isActive: boolean
+type mapStatePropsType = ReturnType<typeof mapStateToProps>
+type mapDispatchType = {
+  setProfileDataThunkCreator: ()=> Promise<void>,
+  activateSidebar: (isActive: boolean)=> void
 }
-
-const SidebarContainer: React.FC<PropsType> = (props)=>{
+const SidebarContainer: React.FC<mapStatePropsType & mapDispatchType> = (props)=>{
   React.useEffect(() => {
     props.setProfileDataThunkCreator()
   },[])
@@ -30,5 +29,5 @@ const mapStateToProps = (state: AppReducer) => {
 export default connect(mapStateToProps, {
   setProfileDataThunkCreator,
   activateSidebar: AuthAction.activateSidebar
-})(SidebarContainer)
+})(SidebarContainer) as React.ComponentType
   

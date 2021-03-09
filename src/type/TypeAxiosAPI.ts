@@ -20,6 +20,5 @@ export interface AuthMeType {
     email: string
   }
   messages: string[]
-  fieldsErrors: string[]
   resultCode: number
 }

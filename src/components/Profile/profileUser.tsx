@@ -5,10 +5,20 @@ import InstagramIcon from "@material-ui/icons/Instagram"
 import unKnow from "../../accecs/image/unknow.jpg"
 import ProfileStatus from "./profileStatus"
 import Proloader from "../../accecs/proloader/proloader"
+import { ProfileType } from "../../type/ProfileTypes"
 
-const UserProfile = ({ profile, status, updateProfileStatusThunkCreator,isOwner,updatePhotoThunkCreator }) => {
-  const onChangeFileUpload = (event)=>{
-    console.log(event.target.files[0]);
+type PropsType = {
+  getProfileThunkCreator:(id: number) => Promise<ProfileType>
+  ProfileStatusThunkCreator: (id: number) => Promise<string>
+  profile: ProfileType | null
+  status: null | string
+  updateProfileStatusThunkCreator: (status: string | null )=> Promise<void>
+  updatePhotoThunkCreator:(image: string)=> Promise<void>
+  isOwner: boolean
+}
+
+const UserProfile: React.FC<PropsType> = ({ profile, status, updateProfileStatusThunkCreator,isOwner,updatePhotoThunkCreator }) => {
+  const onChangeFileUpload = (event:any)=>{
     updatePhotoThunkCreator(event.target.files[0]);
   }
 
@@ -24,7 +34,7 @@ const UserProfile = ({ profile, status, updateProfileStatusThunkCreator,isOwner,
               {profile.photos.small === null ? (
                 <img src={unKnow} alt="" />
               ) : (
-                <img src={profile.photos.large} alt="" />
+                <img src={profile.photos.large!} alt="" />
               )}
             </div>
             <div className="profile-users__person">
@@ -51,11 +61,8 @@ const UserProfile = ({ profile, status, updateProfileStatusThunkCreator,isOwner,
                 <div className="profile-users__discribe">
                   {
                       isOwner 
-                      ?<ProfileStatus
-                      status={status}
-                      updateProfileStatusThunkCreator={
-                        updateProfileStatusThunkCreator
-                      } />
+                      ?<ProfileStatus status={status}
+                      updateProfileStatusThunkCreator={updateProfileStatusThunkCreator} />
                       : null
                   }   
                 </div>

@@ -5,17 +5,13 @@ import {activeSidebar, getAuthData, getEmailData, getLoginData} from "./reselect
 import {AppReducer} from "../../Redux/redux-store";
 import Header from "./header";
 
-
-type PropsType = {
-    getUserDataIsAuthThunkCreator: ()=> Promise<void>,
-    isAuth: boolean,
-    email: string,
-    login: string, 
-    isActive: boolean,
-    activateSidebar: (flag: boolean)=>void
+type mapPropsType = ReturnType<typeof mapStateToProps>
+type dispatchPropsType = {
+    getUserDataIsAuthThunkCreator: ()=> Promise<void>
+    activateSidebar: (isActive: boolean)=> void
 }
 
-const HeaderContainer: React.FC<PropsType> = (props) => {
+const HeaderContainer: React.FC<mapPropsType & dispatchPropsType> = (props) => {
     React.useEffect(() => {
         props.getUserDataIsAuthThunkCreator()
     }, [])

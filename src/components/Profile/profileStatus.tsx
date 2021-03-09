@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from "react";
 
 
-const ProfileStatus = (props) => {
-  const [editmode, setEditMode] = useState(false);
-  const [status, setStatus] = useState(props.status);
-  const doubleClickHandler = () => setEditMode(true);
+type propsType = {
+  status: string | null
+  updateProfileStatusThunkCreator: (status: string | null)=>Promise<void>
+}
+
+const ProfileStatus:React.FC<propsType> = (props) => {
+  const [editmode, setEditMode] = useState<boolean>(false)
+  const [status, setStatus] = useState<string | null>(props.status)
+  const doubleClickHandler = () => setEditMode(true)
   const closeHandler = () => {
-    props.updateProfileStatusThunkCreator(status);
+    props.updateProfileStatusThunkCreator(status)
     setEditMode(false);
   };
   useEffect(() => {
     setStatus(props.status);
   }, [props.status]);
-  const onChangeHandler = (event) => setStatus(event.currentTarget.value);
-  return (~
+  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => setStatus(event.currentTarget.value);
+  return (
     <>
       {editmode ? (
         <input

@@ -1,4 +1,3 @@
-import { UserAction } from './../../Redux/usersReducer';
 import { connect } from "react-redux"
 import {
   followThunkCreator,
@@ -8,7 +7,10 @@ import {
 import Users from "./UsersClassComp"
 import { profileAPI } from "./../API/profileAPI"
 import { userAPI } from "./../API/UserAPI"
-import { AppReducer } from "../../Redux/redux-store"
+import { AppReducer} from "../../Redux/redux-store"
+
+
+export type MapPropsType = ReturnType<typeof mapStateToProps>
 
 
 const mapStateToProps = (state: AppReducer) => {
@@ -22,11 +24,11 @@ const mapStateToProps = (state: AppReducer) => {
   }
 }
 
-const UsersContainer = connect(mapStateToProps, {
+export default connect(mapStateToProps, {
   followThunkCreator,
   UnfollowThunkCreator,
   getUsersThunkCreator,
   profileAPI,
   userAPI,
-})(Users)
-export default UsersContainer
+})(Users)  
+

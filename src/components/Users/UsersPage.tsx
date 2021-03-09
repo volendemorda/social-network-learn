@@ -6,15 +6,17 @@ import Button from '@material-ui/core/Button';
 import {UsersTypes} from "../../type/UsersTypes";
 import Pagination from "./Pagination";
 
-export interface propsType {
+export  type propsType  = {
   totalCountUsers:  number
   pageSize: number
-  CurrentPage: number
+  CurrentPage: number,
+  getUsersThunkCreator: (id: number,pageSize: number)=> Promise<void>
   onChangedPage: (item:number)=> void
   UsersPage: Array<UsersTypes>
-  disableButton: Array<number> | null
+  disableButton: Array<number>
   UnfollowThunkCreator: (id:number)=> void
   followThunkCreator: (id:number)=> void
+  isFetching: boolean
 }
 
 const UserAPI: React.FC<propsType> = (props) => {

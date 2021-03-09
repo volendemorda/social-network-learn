@@ -1,9 +1,8 @@
 import {
-  addPostActionCreatorType,
   InitialStateType,
-  PostAction,
   PostActionTypes
 } from "../type/PostTypes";
+import { inferActionType } from "./redux-store";
 
 
 const initPost:InitialStateType  = {
@@ -16,7 +15,7 @@ const initPost:InitialStateType  = {
     },
   ],
 }
-export const postReducer = (state = initPost, action: PostAction):InitialStateType => {
+export const postReducer = (state = initPost, action: ActionTypes):InitialStateType => {
   switch (action.type) {
     case PostActionTypes.add_post:
       return {...state,postData: [...state.postData,{id: 2,text: action.postText,image:null}]}
@@ -24,13 +23,16 @@ export const postReducer = (state = initPost, action: PostAction):InitialStateTy
       return state
   }
 }
-
-export const addPostActionCreator = (postText:string,image: any):addPostActionCreatorType => {
-  return {
-    type: PostActionTypes.add_post,
-    postText,
-    image
+type ActionTypes = inferActionType<typeof PostAction>
+export const PostAction = {
+  addPostActionCreator: (postText:string,image: string) => {
+    return {
+      type: PostActionTypes.add_post, 
+      postText, 
+      image
+    }
   }
 }
+
 
 export default postReducer

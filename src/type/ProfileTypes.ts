@@ -1,6 +1,6 @@
 export interface InitialState {
     status: null | string
-    profile: null | ProfileType[]
+    profile: null | ProfileType
 }
 export interface ProfileType{
     aboutMe: string

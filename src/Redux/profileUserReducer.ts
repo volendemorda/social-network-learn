@@ -3,7 +3,6 @@ import {
   InitialState,
   listActionTypes,
   ProfileType,
-  setProfileACtype,
 } from "../type/ProfileTypes"
 import { ThunkDispatchType, ThunkType } from "../type/ThunkType"
 import { inferActionType } from "./redux-store"
@@ -39,7 +38,7 @@ export const userProfileReducer = (state = initState,action: ActionType): Initia
 
 type ActionType = inferActionType<typeof ProfileAction>
 export const ProfileAction = {
-  setProfileAC: (profile: ProfileType[]): setProfileACtype =>
+  setProfileAC: (profile: ProfileType)=>
     ({
       type: listActionTypes.setProfile,
       profile,

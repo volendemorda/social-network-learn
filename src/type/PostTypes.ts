@@ -1,8 +1,8 @@
 export interface InitialStateType {
     postData: {
-        id: number,
-        text: string | null,
-        image: string | null
+        id: number
+        text: string 
+        image: string 
     } []
 }
 export enum PostActionTypes {
