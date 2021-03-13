@@ -8,9 +8,8 @@ import {
   getProfileThunkCreator,
   updatePhotoThunkCreator
 } from "../../Redux/profileUserReducer";
-import {getProfile, getStatus } from "./reselect.profile";
+import {Selector} from "./reselect.profile";
 import { AppReducer } from "../../Redux/redux-store";
-import { ProfileType } from "../../type/ProfileTypes";
 
 type PathParamsType = {
   userId: string
@@ -18,19 +17,14 @@ type PathParamsType = {
 export type PropsType = RouteComponentProps<PathParamsType>
 
 type DispatchType = {
-  getProfileThunkCreator:(id: number) => Promise<ProfileType>
-  ProfileStatusThunkCreator: (id: number) => Promise<string>
+  getProfileThunkCreator:(id: number) => Promise<void>
+  ProfileStatusThunkCreator: (id: number) => Promise<void>
   updateProfileStatusThunkCreator: (status: string | null)=> Promise<void>
-  updatePhotoThunkCreator: (photo: string)=> Promise<void>
+  updatePhotoThunkCreator: (photo: File)=> Promise<void>
 }
 export type mapPropsType = ReturnType<typeof mapStateToProps>
 
 type BasePropsType = mapPropsType & DispatchType & PropsType
-
-
-
-
-
 
 class ProfileUserContainer extends React.Component<BasePropsType>{
   refreshProfile(){
@@ -56,8 +50,9 @@ class ProfileUserContainer extends React.Component<BasePropsType>{
 
 const mapStateToProps = (state: AppReducer) => {
   return {
-    profile: getProfile(state),
-    status: getStatus(state),
+    profile: Selector.getProfile(state),
+    status: Selector.getStatus(state),
+    error: Selector.getError(state)
   };
 };
   export default connect(mapStateToProps, {

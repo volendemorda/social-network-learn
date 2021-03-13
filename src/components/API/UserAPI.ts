@@ -1,4 +1,4 @@
-import {UsersType} from "../../type/TypeAxiosAPI";
+import {IUnFollowType, UsersType} from "../../type/TypeAxiosAPI";
 import {instance} from "./API";
 
 export const userAPI = {
@@ -9,6 +9,6 @@ export const userAPI = {
         return instance.post(`/follow/${id}`)
     },
     unFollow(id:number){
-        return instance.delete(`/follow/${id}`)
+        return instance.delete<IUnFollowType>(`/follow/${id}`)
     }
 }

@@ -13,7 +13,7 @@ const initPost:InitialStateType  = {
       image:
         "https://w-dog.ru/wallpapers/0/3/454758574794477/iphone-5-yabloko-eppl-ajfon-telefon-gadzhet-chernyj-korobka.jpg"
     },
-  ],
+  ], 
 }
 export const postReducer = (state = initPost, action: ActionTypes):InitialStateType => {
   switch (action.type) {
@@ -25,7 +25,7 @@ export const postReducer = (state = initPost, action: ActionTypes):InitialStateT
 }
 type ActionTypes = inferActionType<typeof PostAction>
 export const PostAction = {
-  addPostActionCreator: (postText:string,image: string) => {
+  addPostActionCreator: (postText:string,image: string | null) => {
     return {
       type: PostActionTypes.add_post, 
       postText, 

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { ChangeEvent } from "react"
 import FacebookIcon from "@material-ui/icons/Facebook"
 import GitHubIcon from "@material-ui/icons/GitHub"
 import InstagramIcon from "@material-ui/icons/Instagram"
@@ -6,20 +6,39 @@ import unKnow from "../../accecs/image/unknow.jpg"
 import ProfileStatus from "./profileStatus"
 import Proloader from "../../accecs/proloader/proloader"
 import { ProfileType } from "../../type/ProfileTypes"
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
+import Container from '@material-ui/core/Container';
+
 
 type PropsType = {
-  getProfileThunkCreator:(id: number) => Promise<ProfileType>
-  ProfileStatusThunkCreator: (id: number) => Promise<string>
+  getProfileThunkCreator:(id: number) => Promise<void>
+  ProfileStatusThunkCreator: (id: number) => Promise<void>
   profile: ProfileType | null
   status: null | string
   updateProfileStatusThunkCreator: (status: string | null )=> Promise<void>
-  updatePhotoThunkCreator:(image: string)=> Promise<void>
+  updatePhotoThunkCreator:(image: File)=> Promise<void>
   isOwner: boolean
 }
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    small: {
+      width: theme.spacing(25),
+      height: theme.spacing(25),
+    },
+    large: {
+      width: theme.spacing(7),
+      height: theme.spacing(7),
+    },
+  }),
+);
 
 const UserProfile: React.FC<PropsType> = ({ profile, status, updateProfileStatusThunkCreator,isOwner,updatePhotoThunkCreator }) => {
-  const onChangeFileUpload = (event:any)=>{
-    updatePhotoThunkCreator(event.target.files[0]);
+  const classes = useStyles()
+  const onChangeFileUpload = (event:ChangeEvent<HTMLInputElement>)=>{
+    if (event.target.files?.length){
+    updatePhotoThunkCreator(event.target.files[0])
+    }
   }
 
   if (!profile) {
@@ -28,13 +47,13 @@ const UserProfile: React.FC<PropsType> = ({ profile, status, updateProfileStatus
   return (
     <div>
       <div className="profile-users main">
-        <div className="container">
+        <Container maxWidth="sm">
           <div className="profile-users__header">
             <div className="profile-users__picture">
               {profile.photos.small === null ? (
-                <img src={unKnow} alt="" />
+                <Avatar alt={profile.fullName} src={unKnow} className={classes.small} />
               ) : (
-                <img src={profile.photos.large!} alt="" />
+                <Avatar alt={profile.fullName} src={profile.photos.large!} className={classes.small}/>
               )}
             </div>
             <div className="profile-users__person">
@@ -72,9 +91,9 @@ const UserProfile: React.FC<PropsType> = ({ profile, status, updateProfileStatus
                   : null
                 }
               </div>
-            </div>
+            </div> 
           </div>
-        </div>
+        </Container>
       </div>
     </div>
   )

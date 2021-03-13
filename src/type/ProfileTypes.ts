@@ -1,6 +1,7 @@
 export interface InitialState {
     status: null | string
     profile: null | ProfileType
+    error: string
 }
 export interface ProfileType{
     aboutMe: string
@@ -28,4 +29,5 @@ export enum listActionTypes {
     setStatus = "setStatus",
     toggleFetching = "toggleFetching",
     setPhoto = "setPhoto",
+    setError = "setError",
 }

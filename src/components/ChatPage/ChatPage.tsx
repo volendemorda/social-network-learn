@@ -16,6 +16,7 @@ export default ChatPage
 
 const Chat: React.FC = () => {
     const [wsChannel, setWsChannel] = React.useState<WebSocket | null>(null)
+    const messageRef = React.useRef(null)
     React.useEffect(() => {
         let channel: WebSocket
         const closeHandler = () =>{

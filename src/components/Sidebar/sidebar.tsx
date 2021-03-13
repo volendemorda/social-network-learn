@@ -15,6 +15,8 @@ import PostAddIcon from '@material-ui/icons/PostAdd';
 import ForumIcon from '@material-ui/icons/Forum';
 import PeopleIcon from '@material-ui/icons/People';
 import { NavLink } from 'react-router-dom';
+import { NullLiteral } from 'typescript';
+import { useOnClickOutside } from '../../accecs/hook/useOnClickOutside';
 
 type PropsType = {
   activateSidebar: (flag: boolean)=> void,
@@ -71,14 +73,19 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
+
+
  const Sidebar: React.FC<PropsType> = (props) => {
+  const ref = React.useRef<HTMLDivElement | null>()
+  useOnClickOutside(ref,()=>props.activateSidebar(false))
   const clickHandlerIcon = ()=>{
     props.activateSidebar(false) 
   }
   const classes = useStyles()
   const theme = useTheme()
    return (
-    <Drawer
+    <Drawer 
+    ref={ref}
     variant="permanent"
     className={clsx(classes.drawer, {
       [classes.drawerOpen]: props.isActive,

@@ -16,6 +16,9 @@ export const GenerateMessage:React.FC<{wsChannel: WebSocket | null}> = ({wsChann
             wsChannel?.removeEventListener('message',messageHandler)
         }
     },[wsChannel])
+    React.useEffect(() => {
+
+    },[])
     return(
         <div>
             {message.map((item,index)=><Messages key={index} message={item.message} photo={item.photo} userName={item.userName} userId={item.userId}/>)}

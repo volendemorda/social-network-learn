@@ -10,8 +10,12 @@ import { inferActionType } from "./redux-store"
 const initState: InitialState = {
   status: null,
   profile: null,
+  error: "",
 }
-export const userProfileReducer = (state = initState,action: ActionType): InitialState => {
+export const userProfileReducer = (
+  state = initState,
+  action: ActionType
+): InitialState => {
   switch (action.type) {
     case listActionTypes.setProfile:
       return {
@@ -31,6 +35,11 @@ export const userProfileReducer = (state = initState,action: ActionType): Initia
           photos: action.photo,
         } as any,
       }
+    case listActionTypes.setError:
+      return {
+        ...state,
+        error: action.error,
+      }
     default:
       return state
   }
@@ -38,12 +47,12 @@ export const userProfileReducer = (state = initState,action: ActionType): Initia
 
 type ActionType = inferActionType<typeof ProfileAction>
 export const ProfileAction = {
-  setProfileAC: (profile: ProfileType)=>
+  setProfileAC: (profile: ProfileType) =>
     ({
       type: listActionTypes.setProfile,
       profile,
     } as const),
-  setStatusAC: (status: string) =>
+  setStatusAC: (status: string | null) =>
     ({
       type: listActionTypes.setStatus,
       status,
@@ -53,11 +62,15 @@ export const ProfileAction = {
       type: listActionTypes.toggleFetching,
       isFetchind,
     } as const),
-  setPhotoAC: (photo: string | null) =>
+  setPhotoAC: (photo: File) =>
     ({
       type: listActionTypes.setPhoto,
       photo,
     } as const),
+  setError: (error: string) => ({
+    type: listActionTypes.setError,
+    error,
+  } as const),
 }
 
 // thunkCreator
@@ -83,7 +96,9 @@ export const ProfileStatusThunkCreator = (id: number): ThunkType => {
   }
 }
 
-export const updateProfileStatusThunkCreator = (status: string): ThunkType => {
+export const updateProfileStatusThunkCreator = (
+  status: string | null
+): ThunkType => {
   return async (dispatch: ThunkDispatchType) => {
     try {
       const data = await profileAPI.updateStatus(status)
@@ -95,7 +110,7 @@ export const updateProfileStatusThunkCreator = (status: string): ThunkType => {
     }
   }
 }
-export const updatePhotoThunkCreator = (photo: string): ThunkType => {
+export const updatePhotoThunkCreator = (photo: File): ThunkType => {
   return async (dispatch: ThunkDispatchType) => {
     try {
       const data = await profileAPI.updatePhoto(photo)

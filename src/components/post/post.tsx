@@ -9,7 +9,7 @@ type propsType = {
     postData:{
         id: number
         text: string 
-        image: string 
+        image: string | null
     }[]
     addPostActionCreator: (text: string, image: any) => void
     isAuth: boolean

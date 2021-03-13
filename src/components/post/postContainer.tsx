@@ -3,6 +3,7 @@ import Post from "./post";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import { AppReducer } from "../../Redux/redux-store";
+// import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 
 const mapStateToProps = (state:AppReducer)=>{
     return{

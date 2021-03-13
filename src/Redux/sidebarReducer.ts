@@ -22,7 +22,7 @@ export const sidebarReducer = (state = initState, action:ActionType):InitialStat
 }
 type ActionType = inferActionType<typeof SidebarAction>
 export const SidebarAction = {
-  setProfileDataAC: (profile: ProfileType[]) => ({
+  setProfileDataAC: (profile: ProfileType) => ({
       type: listActionType.setProfileUser,profile})
 } 
 

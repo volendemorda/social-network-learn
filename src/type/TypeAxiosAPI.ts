@@ -1,13 +1,12 @@
 export interface UsersType {
   items: {
-    name: string
     id: number
-    uniqueUrlName: null | string
+    name: string
+    status: string | null
     photos: {
       small: string | null
       large: string | null
     }
-    status: string | null
     followed: boolean
   }[]
   totalCount: number
@@ -21,4 +20,9 @@ export interface AuthMeType {
   }
   messages: string[]
   resultCode: number
+}
+export  interface IUnFollowType {
+  resultCode: number
+  messages: string[]
+  data: object
 }

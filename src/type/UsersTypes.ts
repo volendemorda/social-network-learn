@@ -9,7 +9,7 @@ export interface initUsersTypes{
 export interface UsersTypes{
     id: number,
     name: string,
-    status: string,
+    status: string | null,
     photos: {
         small: null | string,
         large: null | string
@@ -24,36 +24,3 @@ export enum listActionTypes{
     Fetching = 'ISFETCHING',
     disableInProgressFollow = 'disableInProgressFollow'
 }
-export interface FollowActionCreatorType{
-    type: listActionTypes.Follow,
-    userId: number
-}
-export interface UnFollowActionCreatorType{
-    type: listActionTypes.UnFollow,
-    userId: number
-}
-export interface setUsersActionCreatorType{
-    type: listActionTypes.setUser,
-    users: any[],
-    count: number
-}
-export interface pageUsersActionCreatorType{
-    type: listActionTypes.SetPageUsers,
-    page: number
-}
-export interface toggleIsFetchingActionCreatorType{
-    type: listActionTypes.Fetching,
-    flag: boolean
-}
-export interface toggleIsGetDataFollowsActionCreatorType{
-    type: listActionTypes.disableInProgressFollow,
-    flag: boolean,
-    buttonId: number
-}
-export type ActionType =
-    FollowActionCreatorType
-    | UnFollowActionCreatorType
-    | setUsersActionCreatorType
-    | pageUsersActionCreatorType
-    | toggleIsFetchingActionCreatorType
-    | toggleIsGetDataFollowsActionCreatorType

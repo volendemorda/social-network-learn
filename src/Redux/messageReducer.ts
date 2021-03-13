@@ -1,9 +1,8 @@
 import {
-  addMessageCreatorType,
-  initialMessageType, MessageAction,
+  initialMessageType,
   MessageActionTypes,
-  updateMessageCreatorType
 } from "../type/MessageTypes";
+import { inferActionType } from "./redux-store";
 
 const initMessage: initialMessageType = {
   user: [
@@ -21,7 +20,7 @@ const initMessage: initialMessageType = {
   newMessageText: "",
 }
 
-const messageReducer = (state = initMessage, action:MessageAction): initialMessageType => {
+const messageReducer = (state = initMessage, action:ActionType): initialMessageType => {
   switch (action.type) {
     case MessageActionTypes.update_message_text:
       return{...state,newMessageText: action.newTextMessage}
@@ -31,9 +30,12 @@ const messageReducer = (state = initMessage, action:MessageAction): initialMessa
       return state
   }
 }
+type ActionType = inferActionType<typeof messageAction>
 
-export const updateMessageCreator = (text: string):updateMessageCreatorType => ({
-  type: MessageActionTypes.update_message_text,newTextMessage: text,  
-})
-export const addMessageCreator = ():addMessageCreatorType => ({type: MessageActionTypes.send_message})
+const messageAction = {
+  updateMessageCreator: (text: string) => ({
+    type: MessageActionTypes.update_message_text,newTextMessage: text} as const),
+   addMessageCreator: () => ({type: MessageActionTypes.send_message} as const)
+}
+
 export default messageReducer

@@ -66,7 +66,7 @@ export const usersReducer = (state = initUsers,action: ActionType): initUsersTyp
         isFetching: action.flag,
         disableButton: action.flag
           ? [...state.disableButton, action.buttonId]
-          : [state.disableButton.filter((id) => id !== action.buttonId)],
+          : [...state.disableButton.filter((id) => id !== action.buttonId)],
       }
     default:
       return state
@@ -95,7 +95,6 @@ export const getUsersThunkCreator = (CurrentPage: number,pageSize: number): Thun
       dispatch(UserAction.pageUsersActionCreator(CurrentPage))
       dispatch(UserAction.toggleIsFetchingActionCreator(true))
       const data = await userAPI.getUsers(CurrentPage, pageSize)
-      console.log("current",CurrentPage);
       dispatch(
         UserAction.setUsersActionCreator(data.data.items, data.data.totalCount)
       )
@@ -108,11 +107,11 @@ export const getUsersThunkCreator = (CurrentPage: number,pageSize: number): Thun
 export const UnfollowThunkCreator = (id: number): ThunkType => {
   return async (dispatch: ThunkDispatchType) => {
     try {
-      dispatch(action.toggleIsGetDataFollowsActionCreator(id, true))
+      await dispatch(UserAction.toggleIsGetDataFollowsActionCreator(id, true))
       const data = await userAPI.unFollow(id)
       if (data.data.resultCode === 0) {
-        dispatch(action.UnFollowActionCreator(id))
-        dispatch(action.toggleIsGetDataFollowsActionCreator(id, false))
+        dispatch(UserAction.UnFollowActionCreator(id))
+        dispatch(UserAction.toggleIsGetDataFollowsActionCreator(id, false))
       }
     } catch (error) {
       console.log(error)
@@ -122,11 +121,11 @@ export const UnfollowThunkCreator = (id: number): ThunkType => {
 export const followThunkCreator = (id: number): ThunkType => {
   return async (dispatch: ThunkDispatchType) => {
     try {
-      dispatch(action.toggleIsGetDataFollowsActionCreator(id, true))
+      await dispatch(UserAction.toggleIsGetDataFollowsActionCreator(id, true))
       const data = await userAPI.follow(id)
       if (data.data.resultCode === 0) {
-        dispatch(action.FollowActionCreator(id))
-        dispatch(action.toggleIsGetDataFollowsActionCreator(id, false))
+        dispatch(UserAction.FollowActionCreator(id))
+        dispatch(UserAction.toggleIsGetDataFollowsActionCreator(id, false))
       }
     } catch (error) {
       console.log(error)
